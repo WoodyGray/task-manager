@@ -1,6 +1,10 @@
 package com.woody.task_manager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -23,13 +27,37 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "personalTasks")
-    private String linePersonalTasks;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "users_and_public_tasks"
+            , joinColumns = @JoinColumn(name = "id_user")
+            , inverseJoinColumns = @JoinColumn(name = "id_public_task")
+    )
+    @JsonIgnore
+    private List<PublicTask> publicTasks;
 
-    @Column(name = "publicTasks")
-    private String linePublicTasks;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "users_and_public_subtasks"
+//            , joinColumns = @JoinColumn(name = "id_user")
+//            , inverseJoinColumns = @JoinColumn(name = "id_public_subtask")
+//    )
+//    private List<PublicSubtask> publicSubtasks;
+
+    @OneToMany(fetch = FetchType.LAZY
+            ,cascade = CascadeType.ALL
+            ,mappedBy = "user")
+    @JsonIgnore
+    private List<PersonalTask> personalTasks;
 
     public User() {
+    }
+
+    public User(String login, String password, String fullName, String email) {
+        this.login = login;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
     }
 
     public int getId() {
@@ -39,6 +67,72 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
+    public List<PersonalTask> getPersonalTasks() {
+        if (personalTasks == null){
+            personalTasks = new ArrayList<>();
+        }
+        return personalTasks;
+    }
+
+    public void setPersonalTasks(List<PersonalTask> personalTasks) {
+        this.personalTasks = personalTasks;
+    }
+    public void addPersonalTaskToUser(PersonalTask personalTask){
+        if (this.personalTasks == null){
+            this.personalTasks = new ArrayList<>();
+        }
+        this.personalTasks.add(personalTask);
+    }
+    public void removePersonalTaskFromUser(PersonalTask personalTask){
+        if (this.personalTasks != null && this.personalTasks.contains(personalTask)) {
+            this.personalTasks.remove(personalTask);
+        }
+    }
+
+    public List<PublicTask> getPublicTasks() {
+        if (publicTasks == null) publicTasks = new ArrayList<>();
+        return publicTasks;
+    }
+
+    public void setPublicTasks(List<PublicTask> publicTasks) {
+        this.publicTasks = publicTasks;
+    }
+
+    public void addPublicTaskToUser(PublicTask publicTask){
+        if (this.publicTasks == null){
+            this.publicTasks = new ArrayList<>();
+        }
+        this.publicTasks.add(publicTask);
+    }
+
+    public void removePublicTaskFromUser(PublicTask publicTask){
+        if (this.publicTasks != null && this.publicTasks.contains(publicTask)){
+            this.publicTasks.remove(publicTask);
+        }
+    }
+
+//    public List<PublicSubtask> getPublicSubtasks() {
+//        if (publicSubtasks == null) publicSubtasks = new ArrayList<>();
+//        return publicSubtasks;
+//    }
+//
+//    public void setPublicSubtasks(List<PublicSubtask> publicSubtasks) {
+//        this.publicSubtasks = publicSubtasks;
+//    }
+//
+//    public void addPublicSubtaskToUser(PublicSubtask publicSubtask){
+//        if (this.publicSubtasks == null){
+//            this.publicSubtasks = new ArrayList<>();
+//        }
+//        this.publicSubtasks.add(publicSubtask);
+//    }
+//
+//    public void removePublicSubtaskFromUser(PublicSubtask publicSubtask){
+//        if (this.publicSubtasks != null && this.publicSubtasks.contains(publicSubtask)){
+//            this.publicSubtasks.remove(publicSubtask);
+//        }
+//    }
 
     public String getLogin() {
         return login;
@@ -72,22 +166,6 @@ public class User {
         this.email = email;
     }
 
-    public String getLinePersonalTasks() {
-        return linePersonalTasks;
-    }
-
-    public void setLinePersonalTasks(String linePersonalTasks) {
-        this.linePersonalTasks = linePersonalTasks;
-    }
-
-    public String getLinePublicTasks() {
-        return linePublicTasks;
-    }
-
-    public void setLinePublicTasks(String linePublicTasks) {
-        this.linePublicTasks = linePublicTasks;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -96,8 +174,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
-                ", linePersonalTasks='" + linePersonalTasks + '\'' +
-                ", linePublicTasks='" + linePublicTasks + '\'' +
                 '}';
     }
 }

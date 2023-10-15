@@ -1,9 +1,11 @@
 package com.woody.task_manager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import javax.xml.crypto.Data;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "personal_tasks")
@@ -23,14 +25,33 @@ public class PersonalTask implements Task{
     @Column(name = "deadline")
     private Date deadline;
 
-    @Column(name = "id_user")
-    private int idUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "id_user"
+    )
+    @JsonIgnore
+    private User user;
 
-    @Column(name = "id_subtasks")
-    private String lineIdSubtasks;
+    @OneToMany(
+            fetch = FetchType.LAZY
+            ,cascade = CascadeType.ALL
+            , mappedBy = "personalTask")
+    private List<PersonalSubtask> personalSubtasks;
+
+    @Column(name = "status")
+    private int status;
 
     public PersonalTask() {
     }
+
+    public PersonalTask(String taskName, Date deadline, User user, int status) {
+        this.taskName = taskName;
+        this.deadline = deadline;
+        this.user = user;
+        this.status = status;
+    }
+
+
 
     public int getId() {
         return id;
@@ -64,31 +85,50 @@ public class PersonalTask implements Task{
         this.deadline = deadline;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getLineIdSubtasks() {
-        return lineIdSubtasks;
+    public List<PersonalSubtask> getPersonalSubtasks() {
+        return personalSubtasks;
     }
 
-    public void setLineIdSubtasks(String lineIdSubtasks) {
-        this.lineIdSubtasks = lineIdSubtasks;
+    public void addPersonalSubtaskToPersonalTask(PersonalSubtask personalSubtask){
+        if (personalSubtasks == null) personalSubtasks = new ArrayList<>();
+        personalSubtasks.add(personalSubtask);
+    }
+
+    public void setPersonalSubtasks(List<PersonalSubtask> personalSubtasks) {
+        this.personalSubtasks = personalSubtasks;
+    }
+
+    public void removePersonalSubtaskFromPersonalTask(PersonalSubtask personalSubtask){
+        if (personalSubtasks != null && personalSubtasks.contains(personalSubtask)){
+            personalSubtasks.remove(personalSubtask);
+        }
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "PersonalTask{" +
-                "id=" + id +
-                ", taskName='" + taskName + '\'' +
+                "taskName='" + taskName + '\'' +
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +
-                ", idUser=" + idUser +
-                ", lineIdSubtasks='" + lineIdSubtasks + '\'' +
+                ", user=" + user +
+                ", personalSubtasks=" + personalSubtasks +
+                ", status=" + status +
                 '}';
     }
 }

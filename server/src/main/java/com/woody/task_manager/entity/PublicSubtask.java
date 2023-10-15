@@ -8,12 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "public_tasks")
-public class PublicTask implements Task{
+@Table(name = "public_subtasks")
+public class PublicSubtask implements Task{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name  = "id")
     private int id;
 
     @Column(name = "task_name")
@@ -27,26 +27,24 @@ public class PublicTask implements Task{
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "users_and_public_tasks"
-            , joinColumns = @JoinColumn(name = "id_public_task")
+            name = "users_and_public_subtasks"
+            , joinColumns = @JoinColumn(name = "id_public_subtask")
             , inverseJoinColumns = @JoinColumn(name = "id_user")
     )
     private List<User> users;
 
-    @OneToMany(
-            fetch = FetchType.LAZY
-            , cascade = CascadeType.ALL
-            , mappedBy = "publicTask"
-    )
-    private List<PublicSubtask> publicSubtasks;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_public_task")
+    @JsonIgnore
+    private PublicTask publicTask;
 
     @Column(name = "status")
     private int status;
 
-    public PublicTask() {
+    public PublicSubtask() {
     }
 
-    public PublicTask(String taskName, Date deadline, int status) {
+    public PublicSubtask(String taskName, Date deadline, int status) {
         this.taskName = taskName;
         this.deadline = deadline;
         this.status = status;
@@ -60,47 +58,12 @@ public class PublicTask implements Task{
         this.id = id;
     }
 
-    public List<User> getUsers() {
-        if (users == null) users = new ArrayList<>();
-        return users;
+    public PublicTask getPublicTask() {
+        return publicTask;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public void addUserToPublicTask(User user){
-        if (this.users == null){
-            this.users = new ArrayList<>();
-        }
-        this.users.add(user);
-    }
-
-    public void removeUserFromPublicTask(User user){
-        if (this.users != null && this.users.contains(user)){
-            this.users.remove(user);
-        }
-    }
-
-    public List<PublicSubtask> getPublicSubtasks() {
-        return publicSubtasks;
-    }
-
-    public void setPublicSubtasks(List<PublicSubtask> publicSubtasks) {
-        this.publicSubtasks = publicSubtasks;
-    }
-
-    public void addPublicSubtaskToPublicTask(PublicSubtask publicSubtask){
-        if (publicSubtasks == null){
-            publicSubtasks = new ArrayList<>();
-        }
-        publicSubtasks.add(publicSubtask);
-    }
-
-    public void removePublicSubtaskFromPublicTask(PublicSubtask publicSubtask){
-        if (publicSubtasks != null && publicSubtasks.contains(publicSubtask)){
-            publicSubtasks.remove(publicSubtask);
-        }
+    public void setPublicTask(PublicTask publicTask) {
+        this.publicTask = publicTask;
     }
 
     public String getTaskName() {
@@ -127,6 +90,27 @@ public class PublicTask implements Task{
         this.deadline = deadline;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void addUserToPublicSubtask(User user){
+        if (this.users == null){
+            this.users = new ArrayList<>();
+        }
+        this.users.add(user);
+    }
+
+    public void removeUserFromPublicSubtask(User user){
+        if (this.users != null && this.users.contains(user)){
+            this.users.remove(user);
+        }
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -137,7 +121,7 @@ public class PublicTask implements Task{
 
     @Override
     public String toString() {
-        return "PublicTask{" +
+        return "Subtask{" +
                 "id=" + id +
                 ", taskName='" + taskName + '\'' +
                 ", description='" + description + '\'' +
