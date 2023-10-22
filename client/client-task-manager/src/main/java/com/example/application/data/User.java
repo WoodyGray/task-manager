@@ -3,11 +3,12 @@ package com.example.application.data;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class User {
 
     private int id;
 
-    private String login;
+    private String username;
 
     private String password;
 
@@ -17,21 +18,13 @@ public class User {
 
     private List<PublicTask> publicTasks;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "users_and_public_subtasks"
-//            , joinColumns = @JoinColumn(name = "id_user")
-//            , inverseJoinColumns = @JoinColumn(name = "id_public_subtask")
-//    )
-//    private List<PublicSubtask> publicSubtasks;
-
     private List<PersonalTask> personalTasks;
 
     public User() {
     }
 
     public User(String login, String password, String fullName, String email) {
-        this.login = login;
+        this.username = login;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
@@ -111,12 +104,12 @@ public class User {
 //        }
 //    }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -147,7 +140,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
+                ", login='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +

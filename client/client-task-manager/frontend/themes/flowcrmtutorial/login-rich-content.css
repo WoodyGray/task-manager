@@ -1,9 +1,9 @@
 .login-rich-content {
-    background-image: ;
+    background-image: url("../../../src/main/java/com/example/application/views/list/earth.jpg");
     background-position: center;
     background-size: cover;
     display: flex;
-    height: 500px;
+    height: 5000px;
 }
 .login-rich-content vaadin-login-form {
     align-items: center;
