@@ -2,26 +2,29 @@ package com.example.application.services;
 
 
 import com.example.application.data.User;
+import com.example.application.services.dto.LogInDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service 
 public class CrmServiceRest {
 
-    private final RestTemplate restTemplate;
-    private final String serverUrl;
+    private WebClient webClient;
+    private String bearerToken;
+    @Value("${application.server.url}")
+    private String baseUrl;
 
-    public CrmServiceRest(
-            RestTemplate restTemplate, @Value("${application.server.url}") String serverUrl
-    ) {
-        this.restTemplate = restTemplate;
-        this.serverUrl = serverUrl;
+    public CrmServiceRest(WebClient.Builder builder) {
+
+        webClient = builder.baseUrl(baseUrl).build();
     }
 
 
@@ -29,13 +32,34 @@ public class CrmServiceRest {
 
         System.out.println("Fetching all Comment objects through REST..");
 
-        return restTemplate.exchange(
-                serverUrl + "/users",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<User>>() {
-                }
-        ).getBody();
+
+////        return restTemplate.exchange(
+////                serverUrl + "/users",
+////                HttpMethod.GET,
+////                null,
+////                new ParameterizedTypeReference<List<User>>() {
+////                }
+//        ).getBody();
+        return new ArrayList<>();
+    }
+
+    public String getBearerToken(LogInDto logInDto){
+        bearerToken = null;
+        try {
+            bearerToken = webClient
+                    .post()
+                    .uri(baseUrl+"/auth")
+                    .body(Mono.just(logInDto), LogInDto.class)
+                    .retrieve()
+                    .bodyToMono(String.class).block();
+        }catch (WebException e){
+
+        }
+
+        if (bearerToken != null){
+            return true;
+        }
+        return false;
     }
 //
 //    public long countContacts() {

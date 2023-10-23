@@ -32,7 +32,7 @@ public class ListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("fullName", "login", "password");
+        grid.setColumns("fullName", "username", "password");
 //        grid.addColumn(showPersonalTaskButton).setHeader("Status");
 //        grid.addColumn(contact -> contact.getCompany().getName()).setHeader("Company");
         grid.addComponentColumn(user -> {
