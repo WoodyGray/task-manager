@@ -1,15 +1,22 @@
-.login-rich-content {
-    background-image: ;
+/*.login-view {*/
+/*    background-image: url("images/earth.jpg");*/
+/*    background-position: center;*/
+/*    background-size: cover;*/
+/*    display: flex;*/
+/*    height: 100%;*/
+/*}*/
+.authentication-background{
+    background-image: url("images/earth.jpg");
     background-position: center;
     background-size: cover;
     display: flex;
-    height: 500px;
+    height: 100%;
 }
-.login-rich-content vaadin-login-form {
+.login-view vaadin-login-form {
     align-items: center;
     display: flex;
     max-width: 300px;
 }
-.login-rich-content vaadin-login-form-wrapper {
+.login-view vaadin-login-form-wrapper {
     background-image: none;
 }

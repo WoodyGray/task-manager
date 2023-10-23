@@ -15,9 +15,11 @@ public class LoginRichContent extends Div {
         LoginForm loginForm = new LoginForm();
         loginForm.getElement().getThemeList().add("dark");
 
-        Image image = new Image("earth.jpg", "My Alt Image");
+//        Image image = new Image("images/earth.jpg", "My Alt Image");
+//        image.setSizeFull();
+//        set
 
-        add(image);
+        add(loginForm);
     }
 
 }
