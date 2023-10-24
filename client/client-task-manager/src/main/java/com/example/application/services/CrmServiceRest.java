@@ -9,6 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -45,21 +46,20 @@ public class CrmServiceRest {
 
     public String getBearerToken(LogInDto logInDto){
         bearerToken = null;
-        try {
-            bearerToken = webClient
-                    .post()
-                    .uri(baseUrl+"/auth")
-                    .body(Mono.just(logInDto), LogInDto.class)
-                    .retrieve()
-                    .bodyToMono(String.class).block();
-        }catch (WebException e){
+        final String[] result = {""};
 
-        }
+        bearerToken = webClient
+                .post()
+                .uri(baseUrl+"/auth")
+                .body(Mono.just(logInDto), LogInDto.class)
+                .retrieve()
+                .bodyToMono(String.class)
+                .doOnError(WebClientResponseException.class, e -> {
+                    result[0] = e.getStatusText();
+                })
+                .block();
 
-        if (bearerToken != null){
-            return true;
-        }
-        return false;
+        return result[0];
     }
 //
 //    public long countContacts() {
