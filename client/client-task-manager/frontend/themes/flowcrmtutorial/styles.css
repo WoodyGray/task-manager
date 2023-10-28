@@ -7,11 +7,22 @@
 /*    height: 100%;*/
 /*}*/
 .authentication-background{
-    background-image: url("images/earth.jpg");
     background-position: center;
     background-size: cover;
     display: flex;
     height: 100%;
+}
+.light-image-background{
+    background-image: url("images/day-earth.jpg");
+}
+.dark-image-background{
+    background-image: url("images/night-earth.jpg");
+}
+
+.signup-view{
+    max-width: 500px;
+    height: 100%;
+    align-items: center;
 }
 .login-view vaadin-login-form {
     align-items: center;

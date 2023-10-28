@@ -3,10 +3,13 @@ package com.example.application.services;
 
 import com.example.application.data.User;
 import com.example.application.services.dto.LogInDto;
+import com.example.application.services.dto.SignUpDto;
+import org.jsoup.helper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -44,45 +47,47 @@ public class CrmServiceRest {
         return new ArrayList<>();
     }
 
-    public String getBearerToken(LogInDto logInDto){
+    public String logIn(LogInDto logInDto){
         bearerToken = null;
-        final String[] result = {""};
+        final String[] result = {"Log in success"};
 
-        bearerToken = webClient
-                .post()
-                .uri(baseUrl+"/auth")
-                .body(Mono.just(logInDto), LogInDto.class)
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnError(WebClientResponseException.class, e -> {
-                    result[0] = e.getStatusText();
-                })
-                .block();
+        try {
+            bearerToken = webClient
+                    .post()
+                    .uri(baseUrl + "/auth")
+                    .body(Mono.just(logInDto), LogInDto.class)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
 
+        }catch (WebClientResponseException e){
+            result[0] = e.getStatusText();
+        }
         return result[0];
     }
-//
-//    public long countContacts() {
-//        return contactRepository.count();
-//    }
-//
-//    public void deleteContact(Contact contact) {
-//        contactRepository.delete(contact);
-//    }
-//
-//    public void saveContact(Contact contact) {
-//        if (contact == null) {
-//            System.err.println("Contact is null. Are you sure you have connected your form to the application?");
-//            return;
-//        }
-//        contactRepository.save(contact);
-//    }
-//
-//    public List<Company> findAllCompanies() {
-//        return companyRepository.findAll();
-//    }
-//
-//    public List<Status> findAllStatuses(){
-//        return statusRepository.findAll();
-//    }
+
+    public void signUp(SignUpDto signUpDto) throws ValidationException{
+        if(signUpDto.getUsername() !=null
+        && signUpDto.getFullName() != null
+        && signUpDto.getEmail() != null
+        && signUpDto.getPassword() != null
+        && signUpDto.getConfirmPassword() != null
+        && signUpDto.getPassword().equals(signUpDto.getConfirmPassword())){
+            try {
+                webClient
+                        .post()
+                        .uri(baseUrl + "/registration")
+                        .body(Mono.just(signUpDto), SignUpDto.class)
+                        .retrieve()
+                        .bodyToMono(Void.class)
+                        .block();
+            }catch (WebClientResponseException e){
+                throw new ValidationException(e.getStatusText());
+            }
+        }else {
+            throw new ValidationException("Check the fields on correct");
+        }
+
+    }
+
 }
