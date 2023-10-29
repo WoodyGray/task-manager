@@ -1,5 +1,6 @@
 package com.woody.task_manager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class PublicTask implements Task{
             , joinColumns = @JoinColumn(name = "id_public_task")
             , inverseJoinColumns = @JoinColumn(name = "id_user")
     )
+    @JsonIgnore
     private List<User> users;
 
     @OneToMany(
@@ -39,6 +41,7 @@ public class PublicTask implements Task{
             , cascade = CascadeType.ALL
             , mappedBy = "publicTask"
     )
+    @JsonIgnore
     private List<PublicSubtask> publicSubtasks;
 
     @Column(name = "status")

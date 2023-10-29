@@ -1,14 +1,18 @@
 package com.example.application.views.authentication;
 
+import com.example.application.components.ThemeButton;
 import com.example.application.services.CrmServiceRest;
 
 import com.example.application.services.dto.LogInDto;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.login.AbstractLogin;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
 
 
 @Route("log-in")
@@ -21,11 +25,20 @@ public class LogInView extends Div {
 	public LogInView(CrmServiceRest service){
 		this.service = service;
 		addClassName("authentication-background");
+		addClassName("light-image-background");
 		addClassName("login-view");
 
 		configureLoginForm();
+		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.setMaxWidth("300px");
+		Button themeButton = ThemeButton.configureThemeButtonWithImage(this);
+		verticalLayout.add(themeButton, loginForm);
 
-		add(loginForm);
+		add(verticalLayout);
+
+		getChildren().forEach(comp -> {
+			comp.addClassName("light-background");
+		});
 	}
 
 	private void configureLoginForm(){
@@ -40,7 +53,7 @@ public class LogInView extends Div {
 			}
 		});
 
-		loginForm.getElement().getThemeList().add("dark");
+//		loginForm.getElement().getThemeList().add("dark");
 	}
 
 	private Boolean authenticate(AbstractLogin.LoginEvent e){

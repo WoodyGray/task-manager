@@ -1,6 +1,6 @@
 package com.example.application.views.authentication;
 
-import com.vaadin.flow.component.UI;
+import com.example.application.components.ThemeButton;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -8,39 +8,29 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.lumo.Lumo;
 
 
 @Route("")
 @PageTitle("Authentication | Vaadin CRM")
-public class AuthenticationView extends VerticalLayout{
+public class AuthenticationView extends Div{
     HorizontalLayout buttonsLayout;
     VerticalLayout mainLayout;
 
     public AuthenticationView(){
         addClassName("authentication-background");
+        addClassName("light-image-background");
 
         configureMainLayout();
-        Button themeButton = configureThemeButton();
-        add(themeButton, mainLayout);
-    }
-
-    private Button configureThemeButton(){
-        Button button = new Button("Theme", click -> {
-            ThemeList themeList =
-                    UI.getCurrent().getElement().getThemeList();
-
-            if (themeList.contains(Lumo.DARK)){
-                themeList.remove(Lumo.DARK);
-            }else {
-                themeList.add(Lumo.DARK);
-            }
+        VerticalLayout verticalLayout = new VerticalLayout();
+        Button themeButton = ThemeButton.configureThemeButtonWithImage(this);
+        verticalLayout.add(themeButton, mainLayout);
+        verticalLayout.setMaxWidth("300px");
+        add(verticalLayout);
+        getChildren().forEach(comp -> {
+            comp.addClassName("light-background");
         });
-
-        return button;
     }
 
     private void configureButtonsLayout(){
@@ -76,5 +66,6 @@ public class AuthenticationView extends VerticalLayout{
         mainLayout.add(buttonsLayout);
 //        mainLayout.getElement().getThemeList().add("dark");
         mainLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        mainLayout.setSizeFull();
     }
 }

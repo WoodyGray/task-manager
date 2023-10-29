@@ -1,15 +1,14 @@
 package com.example.application.services;
 
 
+import com.example.application.data.PersonalTask;
+import com.example.application.data.PublicTask;
+import com.example.application.data.Task;
 import com.example.application.data.User;
 import com.example.application.services.dto.LogInDto;
 import com.example.application.services.dto.SignUpDto;
 import org.jsoup.helper.ValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -17,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service 
 public class CrmServiceRest {
@@ -25,6 +25,7 @@ public class CrmServiceRest {
     private String bearerToken;
     @Value("${application.server.url}")
     private String baseUrl;
+    private User user;
 
     public CrmServiceRest(WebClient.Builder builder) {
 
@@ -45,6 +46,52 @@ public class CrmServiceRest {
 ////                }
 //        ).getBody();
         return new ArrayList<>();
+    }
+
+    public List<PublicTask> getPublicTasks(){
+        if (bearerToken != null){
+            try {
+                WebClient.RequestHeadersSpec<?> spec
+                        = webClient
+                        .get()
+                        .uri(baseUrl + "/personal-info/public-tasks")
+                        .header("Authorization", bearerToken);
+
+                System.out.println(1);
+
+                List<PublicTask> result = Objects.requireNonNull(spec.retrieve()
+                        .toEntityList(PublicTask.class).block()).getBody();
+
+                if (result == null){
+                    return new ArrayList<>();
+                }else {
+                    return result;
+                }
+
+            }catch (WebClientResponseException e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<PersonalTask> getPersonalTasks(){
+        if (bearerToken != null){
+            try {
+                WebClient.RequestHeadersSpec<?> spec
+                        = webClient
+                        .get()
+                        .uri(baseUrl + "/personal-info/personal-tasks")
+                        .header("Authorization", bearerToken);
+
+                return spec.retrieve()
+                        .toEntityList(PersonalTask.class).block().getBody();
+
+            }catch (WebClientResponseException e){
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public String logIn(LogInDto logInDto){

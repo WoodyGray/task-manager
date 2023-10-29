@@ -1,24 +1,24 @@
 package com.example.application.data;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class PersonalTask implements Task {
 
     private int id;
-
     private String taskName;
-
     private String description;
-
     private Date deadline;
+    private int status;
 
     private User user;
 
     private List<PersonalSubtask> personalSubtasks;
-
-    private int status;
 
     public PersonalTask() {
     }
@@ -31,72 +31,15 @@ public class PersonalTask implements Task {
     }
 
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<PersonalSubtask> getPersonalSubtasks() {
-        return personalSubtasks;
-    }
-
     public void addPersonalSubtaskToPersonalTask(PersonalSubtask personalSubtask){
         if (personalSubtasks == null) personalSubtasks = new ArrayList<>();
         personalSubtasks.add(personalSubtask);
-    }
-
-    public void setPersonalSubtasks(List<PersonalSubtask> personalSubtasks) {
-        this.personalSubtasks = personalSubtasks;
     }
 
     public void removePersonalSubtaskFromPersonalTask(PersonalSubtask personalSubtask){
         if (personalSubtasks != null && personalSubtasks.contains(personalSubtask)){
             personalSubtasks.remove(personalSubtask);
         }
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     @Override
