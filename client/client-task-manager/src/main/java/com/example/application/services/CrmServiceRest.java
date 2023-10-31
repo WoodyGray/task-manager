@@ -3,26 +3,30 @@ package com.example.application.services;
 
 import com.example.application.data.PersonalTask;
 import com.example.application.data.PublicTask;
-import com.example.application.data.Task;
 import com.example.application.data.User;
 import com.example.application.services.dto.LogInDto;
 import com.example.application.services.dto.SignUpDto;
+import com.example.application.services.dto.TokenResponseDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vaadin.flow.component.notification.Notification;
 import org.jsoup.helper.ValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service 
 public class CrmServiceRest {
 
     private WebClient webClient;
-    private String bearerToken;
+    @JsonProperty("token")
+    private TokenResponseDto bearerToken;
     @Value("${application.server.url}")
     private String baseUrl;
     private User user;
@@ -51,16 +55,17 @@ public class CrmServiceRest {
     public List<PublicTask> getPublicTasks(){
         if (bearerToken != null){
             try {
-                WebClient.RequestHeadersSpec<?> spec
-                        = webClient
-                        .get()
-                        .uri(baseUrl + "/personal-info/public-tasks")
-                        .header("Authorization", bearerToken);
-
-                System.out.println(1);
-
-                List<PublicTask> result = Objects.requireNonNull(spec.retrieve()
-                        .toEntityList(PublicTask.class).block()).getBody();
+                Flux<PublicTask> publicTaskFlux =
+                        webClient.get()
+                                .uri(baseUrl + "/personal-info/public-tasks")
+                                .header("Authorization",
+                                        "Bearer " + bearerToken.getBearerToken())
+                                .retrieve()
+                                .bodyToFlux(PublicTask.class);
+                System.out.println(bearerToken);
+                List<PublicTask> result = publicTaskFlux
+                        .collect(Collectors.toList())
+                        .share().block();
 
                 if (result == null){
                     return new ArrayList<>();
@@ -69,6 +74,7 @@ public class CrmServiceRest {
                 }
 
             }catch (WebClientResponseException e){
+                Notification.show("Reauthorize");
                 e.printStackTrace();
             }
         }
@@ -82,10 +88,13 @@ public class CrmServiceRest {
                         = webClient
                         .get()
                         .uri(baseUrl + "/personal-info/personal-tasks")
-                        .header("Authorization", bearerToken);
+                        .header("Authorization",
+                                "Bearer " +bearerToken.getBearerToken());
 
                 return spec.retrieve()
                         .toEntityList(PersonalTask.class).block().getBody();
+
+
 
             }catch (WebClientResponseException e){
                 e.printStackTrace();
@@ -104,8 +113,17 @@ public class CrmServiceRest {
                     .uri(baseUrl + "/auth")
                     .body(Mono.just(logInDto), LogInDto.class)
                     .retrieve()
-                    .bodyToMono(String.class)
+                    .bodyToMono(TokenResponseDto.class)
                     .block();
+
+//            Mono<String> tokenMono = webClient.post()
+//                    .uri(baseUrl + "/auth")
+//                    .body(Mono.just(logInDto), LogInDto.class)
+//                    .retrieve()
+//                    .bodyToMono(String.class);
+//
+//            bearerToken = tokenMono
+//                    .share().block();
 
         }catch (WebClientResponseException e){
             result[0] = e.getStatusText();

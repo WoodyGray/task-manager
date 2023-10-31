@@ -5,14 +5,28 @@ import com.example.application.data.Task;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.tabs.Tab;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypesPublicTasks extends TypesTasks{
-    private List<PublicTask> publicTaskList;
+    private final List<PublicTask> publicTaskList;
+    private final List<Task> extractTasks;
+    private final List<Task> inProcessTasks;
+    private final List<Task> notStartedTasks;
 
     public TypesPublicTasks(List<PublicTask> taskList) {
         super();
         publicTaskList = taskList;
+        extractTasks = getSomeStatusTasks(2);
+        setBadge(getExtractBadge(),
+                extractTasks.size());
+        inProcessTasks = getSomeStatusTasks(1);
+        setBadge(getInProcessBadge(),
+                inProcessTasks.size());
+        notStartedTasks = getSomeStatusTasks(0);
+        setBadge(getNotStartedBadge(),
+                notStartedTasks.size());
+
     }
 
     @Override
@@ -22,11 +36,25 @@ public class TypesPublicTasks extends TypesTasks{
             return;
         }
         if (tab.equals(getInProcess())){
-            getContent().add(new Paragraph("In process tasks"));
+            getContent().add(new TasksAccordion(inProcessTasks));
         }else if (tab.equals(getExtract())){
-            getContent().add(new Paragraph("Extract tasks"));
+            getContent().add(new TasksAccordion(extractTasks));
         }else if (tab.equals(getNotStarted())){
-            getContent().add(new Paragraph(publicTaskList.toString()));
+            getContent().add(new TasksAccordion(notStartedTasks));
         }
     }
+
+    private List<Task> getSomeStatusTasks(int status){
+        List<Task> result = null;
+        if (publicTaskList != null){
+            result = new ArrayList<>();
+            for (PublicTask task: publicTaskList
+                 ) {
+                if (task.getStatus() == status)
+                    result.add(task);
+            }
+        }
+        return result;
+    }
+
 }

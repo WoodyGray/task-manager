@@ -2,6 +2,7 @@ package com.woody.task_manager.service;
 
 import com.woody.task_manager.dto.RegistrationUserDto;
 import com.woody.task_manager.dto.UpdateUserPasswordDto;
+import com.woody.task_manager.entity.PersonalTask;
 import com.woody.task_manager.entity.PublicTask;
 import com.woody.task_manager.entity.User;
 import com.woody.task_manager.exception.AppError;
@@ -72,12 +73,12 @@ public class UserService implements UserDetailsService {
     }
     public ResponseEntity<?> findPersonalTaskByToken(String token) {
         User user = findByToken(token);
-        List<PublicTask> publicTasks = user.getPublicTasks();
-        if (publicTasks == null || publicTasks.isEmpty()){
+        List<PersonalTask> personalTasks = user.getPersonalTasks();
+        if (personalTasks == null || personalTasks.isEmpty()){
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "personal task list is null"),
                     HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(publicTasks);
+        return ResponseEntity.ok(personalTasks);
     }
 
     public String updatePasswordByToken(String token, UpdateUserPasswordDto updateUserPasswordDto){

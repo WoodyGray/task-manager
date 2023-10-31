@@ -9,20 +9,28 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class TypesTasks extends Div {
     private final Tab inProcess;
     private final Tab extract;
     private final Tab notStarted;
     private final VerticalLayout content;
+    private Span inProcessBadge;
+    private Span extractBadge;
+    private Span notStartedBadge;
 
     public TypesTasks(){
-        inProcess = new Tab(new Span("In process"), createBadge(0));
-        extract = new Tab(new Span("Extract"), createBadge(0));
-        notStarted = new Tab(new Span("Not started"), createBadge(0));
+        inProcessBadge = createBadge(0);
+        extractBadge = createBadge(0);
+        notStartedBadge = createBadge(0);
+        inProcess = new Tab(new Span("In process"), inProcessBadge);
+        extract = new Tab(new Span("Extract"), extractBadge);
+        notStarted = new Tab(new Span("Not started"), notStartedBadge);
 
         Tabs tabs = new Tabs();
         tabs.setAutoselect(false);
@@ -55,5 +63,9 @@ public class TypesTasks extends Div {
         badge.getElement().getThemeList().add("badge small contrast");
         badge.getStyle().set("margin-inline-start", "var(--lumo-space-xs)");
         return badge;
+    }
+
+    public void setBadge(Span span, int value){
+        span.setText(String.valueOf(value));
     }
 }
