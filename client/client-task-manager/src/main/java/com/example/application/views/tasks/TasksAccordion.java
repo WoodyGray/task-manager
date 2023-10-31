@@ -5,10 +5,16 @@ import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class TasksAccordion extends Accordion {
+    private VerticalLayout buttonLayout = new VerticalLayout();
+    private Button taskInfoButton;
     public TasksAccordion(List<Task> tasks){
         close();
         addTasks(tasks);
@@ -21,12 +27,13 @@ public class TasksAccordion extends Accordion {
                     + task.getDescription());
             Span deadLine = new Span("Deadline: "
                     + task.getDeadline());
-            Button taskInfoButton = new Button("Show more");
+            taskInfoButton = new Button("Show more");
+            buttonLayout.add(taskInfoButton);
 
             VerticalLayout taskLayout = new VerticalLayout(
                     description,
                     deadLine,
-                    taskInfoButton);
+                    buttonLayout);
             taskLayout.setSpacing(false);
             taskLayout.setPadding(false);
 

@@ -24,11 +24,11 @@ import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
-public class TasksView extends AppLayout {
+public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;
 
-    public TasksView(CrmServiceRest crmServiceRest){
+    public TasksApp(CrmServiceRest crmServiceRest){
         service = crmServiceRest;
         DrawerToggle toggle = new DrawerToggle();
         H1 title = new H1("Task manager");

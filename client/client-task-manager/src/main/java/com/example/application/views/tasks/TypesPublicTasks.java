@@ -2,6 +2,7 @@ package com.example.application.views.tasks;
 
 import com.example.application.data.PublicTask;
 import com.example.application.data.Task;
+import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.tabs.Tab;
 
