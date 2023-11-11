@@ -1,22 +1,25 @@
-package com.example.application.views.tasks;
+package com.example.application.views.tasks.publicTasks;
 
-import com.example.application.data.PersonalTask;
 import com.example.application.data.PublicTask;
 import com.example.application.data.Task;
+import com.example.application.views.tasks.TasksAccordion;
+import com.example.application.views.tasks.TypesTasks;
+import com.vaadin.flow.component.accordion.Accordion;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.tabs.Tab;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypesPersonalTasks extends TypesTasks{
-    private final List<PersonalTask> personalTaskList;
+public class TypesPublicTasks extends TypesTasks {
+    private final List<PublicTask> publicTaskList;
     private final List<Task> extractTasks;
     private final List<Task> inProcessTasks;
     private final List<Task> notStartedTasks;
 
-    public TypesPersonalTasks(List<PersonalTask> taskList) {
+    public TypesPublicTasks(List<PublicTask> taskList) {
         super();
-        personalTaskList = taskList;
+        publicTaskList = taskList;
         extractTasks = getSomeStatusTasks(2);
         setBadge(getExtractBadge(),
                 extractTasks.size());
@@ -46,14 +49,15 @@ public class TypesPersonalTasks extends TypesTasks{
 
     private List<Task> getSomeStatusTasks(int status){
         List<Task> result = null;
-        if (personalTaskList != null){
+        if (publicTaskList != null){
             result = new ArrayList<>();
-            for (PersonalTask task: personalTaskList
-            ) {
+            for (PublicTask task: publicTaskList
+                 ) {
                 if (task.getStatus() == status)
                     result.add(task);
             }
         }
         return result;
     }
+
 }

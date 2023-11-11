@@ -2,11 +2,9 @@ package com.example.application.views.tasks;
 
 import com.example.application.data.PersonalTask;
 import com.example.application.data.PublicTask;
-import com.example.application.data.Task;
-import com.vaadin.flow.component.accordion.Accordion;
-import com.vaadin.flow.component.grid.Grid;
+import com.example.application.views.tasks.personalTasks.TypesPersonalTasks;
+import com.example.application.views.tasks.publicTasks.TypesPublicTasks;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
