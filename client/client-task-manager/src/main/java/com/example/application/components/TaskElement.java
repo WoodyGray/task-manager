@@ -9,11 +9,14 @@ import lombok.Data;
 
 @Data
 public class TaskElement<T extends Task>  {
-    private Task task;
+    private T task;
     private Span description;
     private Span deadLine;
     private VerticalLayout taskLayout;
     private Button showMoreButton;
+    private Button backButton;
+    private VerticalLayout firstLayout;
+    private VerticalLayout secondLayout;
     private HorizontalLayout firstButtonLayout;
     private HorizontalLayout secondButtonLayout;
 
@@ -23,23 +26,58 @@ public class TaskElement<T extends Task>  {
                 + task.getDescription());
         deadLine = new Span("Deadline: "
                 + task.getDeadline());
-        taskLayout = new VerticalLayout(
-                description,
-                deadLine);
+        configureFirstLayout();
+        configureSecondLayout();
+
+        taskLayout = new VerticalLayout();
 
         taskLayout.setSpacing(false);
         taskLayout.setPadding(false);
     }
 
-
-
-    public <T extends Task> Button configureShowMoreButton(T task, VerticalLayout taskLayout){
+    private void configureShowMoreButton(){
         Button showMoreButton =  new Button("Show more");
-//        showMoreButton.addClickListener(event -> {
-//            taskLayout.remove(firstButtonLayout);
-//
-//
-//        });
-        return showMoreButton;
+        showMoreButton.addClickListener(event -> {
+            taskLayout.remove(firstLayout);
+            taskLayout.add(secondLayout);
+        });
+        this.showMoreButton = showMoreButton;
+    }
+
+    private void configureBackButton(){
+        Button backButton = new Button("Back");
+        backButton.addClickListener(event -> {
+            taskLayout.remove(secondLayout);
+            taskLayout.add(firstLayout);
+        });
+        this.backButton = backButton;
+    }
+
+    public void configureFirstLayout(){
+//        description = new Span("Description: "
+//                + task.getDescription());
+//        deadLine = new Span("Deadline: "
+//                + task.getDeadline());
+        configureShowMoreButton();
+        firstButtonLayout = new HorizontalLayout(
+                showMoreButton
+        );
+        firstLayout = new VerticalLayout();
+        firstLayout.add(description, deadLine);
+    }
+
+    public void configureSecondLayout(){
+//        description = new Span("Description: "
+//                + task.getDescription());
+//        deadLine = new Span("Deadline: "
+//                + task.getDeadline());
+        configureBackButton();
+        secondButtonLayout = new HorizontalLayout(
+                backButton
+        );
+        secondLayout = new VerticalLayout(
+        );
+        secondLayout.add(description, deadLine);
+
     }
 }
