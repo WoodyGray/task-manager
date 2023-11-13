@@ -11,9 +11,9 @@ import java.util.List;
 
 public class TypesPersonalTasks extends TypesTasks {
     private final List<PersonalTask> personalTaskList;
-    private final List<Task> extractTasks;
-    private final List<Task> inProcessTasks;
-    private final List<Task> notStartedTasks;
+    private final List<PersonalTask> extractTasks;
+    private final List<PersonalTask> inProcessTasks;
+    private final List<PersonalTask> notStartedTasks;
 
     public TypesPersonalTasks(List<PersonalTask> taskList) {
         super();
@@ -37,16 +37,16 @@ public class TypesPersonalTasks extends TypesTasks {
             return;
         }
         if (tab.equals(getInProcess())){
-            getContent().add(new TasksAccordion(inProcessTasks));
+            getContent().add(new PersonalTasksAccordion(inProcessTasks));
         }else if (tab.equals(getExtract())){
-            getContent().add(new TasksAccordion(extractTasks));
+            getContent().add(new PersonalTasksAccordion(extractTasks));
         }else if (tab.equals(getNotStarted())){
-            getContent().add(new TasksAccordion(notStartedTasks));
+            getContent().add(new PersonalTasksAccordion(notStartedTasks));
         }
     }
 
-    private List<Task> getSomeStatusTasks(int status){
-        List<Task> result = null;
+    private List<PersonalTask> getSomeStatusTasks(int status){
+        List<PersonalTask> result = null;
         if (personalTaskList != null){
             result = new ArrayList<>();
             for (PersonalTask task: personalTaskList

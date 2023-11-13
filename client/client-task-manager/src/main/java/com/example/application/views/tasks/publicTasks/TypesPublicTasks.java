@@ -13,9 +13,9 @@ import java.util.List;
 
 public class TypesPublicTasks extends TypesTasks {
     private final List<PublicTask> publicTaskList;
-    private final List<Task> extractTasks;
-    private final List<Task> inProcessTasks;
-    private final List<Task> notStartedTasks;
+    private final List<PublicTask> extractTasks;
+    private final List<PublicTask> inProcessTasks;
+    private final List<PublicTask> notStartedTasks;
 
     public TypesPublicTasks(List<PublicTask> taskList) {
         super();
@@ -39,16 +39,16 @@ public class TypesPublicTasks extends TypesTasks {
             return;
         }
         if (tab.equals(getInProcess())){
-            getContent().add(new TasksAccordion(inProcessTasks));
+            getContent().add(new PublicTasksAccordion(inProcessTasks));
         }else if (tab.equals(getExtract())){
-            getContent().add(new TasksAccordion(extractTasks));
+            getContent().add(new PublicTasksAccordion(extractTasks));
         }else if (tab.equals(getNotStarted())){
-            getContent().add(new TasksAccordion(notStartedTasks));
+            getContent().add(new PublicTasksAccordion(notStartedTasks));
         }
     }
 
-    private List<Task> getSomeStatusTasks(int status){
-        List<Task> result = null;
+    private List<PublicTask> getSomeStatusTasks(int status){
+        List<PublicTask> result = null;
         if (publicTaskList != null){
             result = new ArrayList<>();
             for (PublicTask task: publicTaskList
