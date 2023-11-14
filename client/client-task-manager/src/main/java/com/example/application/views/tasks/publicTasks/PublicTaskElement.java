@@ -36,6 +36,8 @@ public class PublicTaskElement extends TaskElement {
     @Override
     public void configureFirstLayout() {
         super.configureFirstLayout();
+//        getFirstLayout().add(getDescription());
+//        getFirstLayout().add(getDeadLine());
         getFirstLayout().add(getFirstButtonLayout());
     }
 

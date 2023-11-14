@@ -26,8 +26,8 @@ public class TaskElement<T extends Task>  {
                 + task.getDescription());
         deadLine = new Span("Deadline: "
                 + task.getDeadline());
-        configureFirstLayout();
-        configureSecondLayout();
+//        configureFirstLayout();
+//        configureSecondLayout();
 
         taskLayout = new VerticalLayout();
 
@@ -75,9 +75,7 @@ public class TaskElement<T extends Task>  {
         secondButtonLayout = new HorizontalLayout(
                 backButton
         );
-        secondLayout = new VerticalLayout(
-        );
+        secondLayout = new VerticalLayout();
         secondLayout.add(description, deadLine);
-
     }
 }
