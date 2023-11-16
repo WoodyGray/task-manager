@@ -29,26 +29,32 @@ public class TaskElement<T extends Task>  {
 //        configureFirstLayout();
 //        configureSecondLayout();
 
+        firstButtonLayout = new HorizontalLayout();
+        secondButtonLayout = new HorizontalLayout();
+
         taskLayout = new VerticalLayout();
 
         taskLayout.setSpacing(false);
         taskLayout.setPadding(false);
     }
 
-    private void configureShowMoreButton(){
+    public void configureShowMoreButton(){
         Button showMoreButton =  new Button("Show more");
         showMoreButton.addClickListener(event -> {
-            taskLayout.remove(firstLayout);
+//            taskLayout.remove(firstLayout);
+            taskLayout.remove(firstButtonLayout);
             taskLayout.add(secondLayout);
+            taskLayout.add(secondButtonLayout);
         });
         this.showMoreButton = showMoreButton;
     }
 
-    private void configureBackButton(){
+    public void configureBackButton(){
         Button backButton = new Button("Back");
         backButton.addClickListener(event -> {
             taskLayout.remove(secondLayout);
-            taskLayout.add(firstLayout);
+            taskLayout.remove(secondButtonLayout);
+            taskLayout.add(firstButtonLayout);
         });
         this.backButton = backButton;
     }
@@ -58,10 +64,10 @@ public class TaskElement<T extends Task>  {
 //                + task.getDescription());
 //        deadLine = new Span("Deadline: "
 //                + task.getDeadline());
-        configureShowMoreButton();
-        firstButtonLayout = new HorizontalLayout(
-                showMoreButton
-        );
+//        configureShowMoreButton();
+//        firstButtonLayout = new HorizontalLayout(
+//                showMoreButton
+//        );
         firstLayout = new VerticalLayout();
         firstLayout.add(description, deadLine);
     }
@@ -71,11 +77,11 @@ public class TaskElement<T extends Task>  {
 //                + task.getDescription());
 //        deadLine = new Span("Deadline: "
 //                + task.getDeadline());
-        configureBackButton();
-        secondButtonLayout = new HorizontalLayout(
-                backButton
-        );
+//        configureBackButton();
+//        secondButtonLayout = new HorizontalLayout(
+//                backButton
+//        );
         secondLayout = new VerticalLayout();
-        secondLayout.add(description, deadLine);
+//        secondLayout.add(description, deadLine);
     }
 }

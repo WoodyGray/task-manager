@@ -15,10 +15,18 @@ public class PublicTaskElement extends TaskElement {
 
     public PublicTaskElement(PublicTask task) {
         super(task);
+
+        super.configureShowMoreButton();
+        super.configureBackButton();
+        getFirstButtonLayout().add(getShowMoreButton());
+        getSecondButtonLayout().add(getBackButton());
+
         initUsersAvatars(task.getUsers());
         configureFirstLayout();
-        configureSecondLayout();
         getTaskLayout().add(getFirstLayout());
+        getTaskLayout().add(getFirstButtonLayout());
+
+        configureSecondLayout();
     }
 
     public void initUsersAvatars(List<User> users){
@@ -49,4 +57,6 @@ public class PublicTaskElement extends TaskElement {
                 getSecondButtonLayout()
         );
     }
+
+
 }

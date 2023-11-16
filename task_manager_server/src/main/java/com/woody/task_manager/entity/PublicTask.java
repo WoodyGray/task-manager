@@ -33,7 +33,7 @@ public class PublicTask implements Task{
             , joinColumns = @JoinColumn(name = "id_public_task")
             , inverseJoinColumns = @JoinColumn(name = "id_user")
     )
-    @JsonIgnore
+//    @JsonIgnore
     private List<User> users;
 
     @OneToMany(
