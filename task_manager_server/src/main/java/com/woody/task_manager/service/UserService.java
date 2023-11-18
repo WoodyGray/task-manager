@@ -62,6 +62,15 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+//    public ResponseEntity<?> findByToken(String token){
+//        User user = findByToken(token);
+//        if (user == null){
+//            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "user is null"),
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//        return ResponseEntity.ok(user);
+//    }
+
     public ResponseEntity<?> findPublicTaskByToken(String token){
         User user = findByToken(token);
         List<PublicTask> publicTasks = user.getPublicTasks();

@@ -41,7 +41,7 @@ public class PublicTask implements Task{
             , cascade = CascadeType.ALL
             , mappedBy = "publicTask"
     )
-    @JsonIgnore
+//    @JsonIgnore
     private List<PublicSubtask> publicSubtasks;
 
     @Column(name = "status")

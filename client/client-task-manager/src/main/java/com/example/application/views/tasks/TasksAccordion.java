@@ -26,13 +26,13 @@ public class TasksAccordion<T extends Task,
 //        addTasks(tasks);
     }
 
-    protected void addTasks(List<T> tasks, Class<E> eClass){
+    protected void addTasks(List<T> tasks, Class<E> eClass, String username){
         taskElements = new ArrayList<>();
         for (T task: tasks
              ) {
             try {
                 Constructor<E> constructor = eClass.getConstructor(task.getClass());
-                E taskElement = constructor.newInstance(task);
+                E taskElement = constructor.newInstance(task, username);
                 taskElements.add(taskElement);
 
                 this.add(task.getTaskName(), taskElement.getTaskLayout());

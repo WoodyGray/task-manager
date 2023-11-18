@@ -19,9 +19,11 @@ public class TaskElement<T extends Task>  {
     private VerticalLayout secondLayout;
     private HorizontalLayout firstButtonLayout;
     private HorizontalLayout secondButtonLayout;
+    private String username;
 
-    public TaskElement(T task) {
+    public TaskElement(T task, String username) {
         this.task = task;
+        this.username = username;
         description = new Span("Description: "
                 + task.getDescription());
         deadLine = new Span("Deadline: "

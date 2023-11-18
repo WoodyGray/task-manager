@@ -103,6 +103,26 @@ public class CrmServiceRest {
         return null;
     }
 
+    public User getUser(){
+        if (bearerToken != null){
+            try {
+                WebClient.RequestHeadersSpec<?> spec
+                        = webClient
+                        .get()
+                        .uri(baseUrl + "/personal-info/user")
+                        .header("Authorization",
+                                "Bearer " + bearerToken.getBearerToken());
+
+                return spec.retrieve()
+                        .toEntity(User.class).block().getBody();
+
+            }catch (WebClientResponseException e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public String logIn(LogInDto logInDto){
         bearerToken = null;
         final String[] result = {"Log in success"};

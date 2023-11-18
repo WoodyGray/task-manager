@@ -16,9 +16,11 @@ public class TypesPublicTasks extends TypesTasks {
     private final List<PublicTask> extractTasks;
     private final List<PublicTask> inProcessTasks;
     private final List<PublicTask> notStartedTasks;
+    private String username;
 
-    public TypesPublicTasks(List<PublicTask> taskList) {
+    public TypesPublicTasks(List<PublicTask> taskList, String username) {
         super();
+        this.username = username;
         publicTaskList = taskList;
         extractTasks = getSomeStatusTasks(2);
         setBadge(getExtractBadge(),
@@ -39,11 +41,11 @@ public class TypesPublicTasks extends TypesTasks {
             return;
         }
         if (tab.equals(getInProcess())){
-            getContent().add(new PublicTasksAccordion(inProcessTasks));
+            getContent().add(new PublicTasksAccordion(inProcessTasks, username));
         }else if (tab.equals(getExtract())){
-            getContent().add(new PublicTasksAccordion(extractTasks));
+            getContent().add(new PublicTasksAccordion(extractTasks, username));
         }else if (tab.equals(getNotStarted())){
-            getContent().add(new PublicTasksAccordion(notStartedTasks));
+            getContent().add(new PublicTasksAccordion(notStartedTasks, username));
         }
     }
 

@@ -20,14 +20,15 @@ public class TasksTabs extends Div {
     private final VerticalLayout content;
 
     public TasksTabs(List<PublicTask> publicTaskList,
-                     List<PersonalTask> personalTaskList) {
+                     List<PersonalTask> personalTaskList,
+                     String username) {
         publicTasks = new Tab(new Span("Public tasks"),
                 createBadge(publicTaskList.size()));
         personalTasks = new Tab(new Span("Personal tasks"),
                 createBadge(personalTaskList.size()));
 
         typesPersonaTasks = new TypesPersonalTasks(personalTaskList);
-        typesPublicTasks = new TypesPublicTasks(publicTaskList);
+        typesPublicTasks = new TypesPublicTasks(publicTaskList, username);
 
         Tabs tabs = new Tabs();
         tabs.setAutoselect(false);

@@ -1,9 +1,12 @@
 package com.woody.task_manager.controller;
 
 import com.woody.task_manager.dto.UpdateUserPasswordDto;
+import com.woody.task_manager.entity.User;
+import com.woody.task_manager.exception.AppError;
 import com.woody.task_manager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,16 @@ public class PersonalUserInfoController {
     @GetMapping("/personal-tasks")
     public ResponseEntity<?> getPersonalTasks(@RequestHeader (name = "Authorization") String token){
         return userService.findPersonalTaskByToken(token.substring(7));
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUser(@RequestHeader (name = "Authorization") String token){
+        User user = userService.findByToken(token);
+        if (user == null){
+            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "user is null"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/password")

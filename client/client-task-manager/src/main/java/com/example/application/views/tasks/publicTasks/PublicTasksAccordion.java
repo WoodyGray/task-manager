@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PublicTasksAccordion extends TasksAccordion {
-    public PublicTasksAccordion(List<PublicTask> tasks) {
+    public PublicTasksAccordion(List<PublicTask> tasks, String username) {
         super();
-        addTasks(tasks, PublicTaskElement.class);
+        if (tasks != null)
+            addTasks(tasks, PublicTaskElement.class, username);
     }
 
 }

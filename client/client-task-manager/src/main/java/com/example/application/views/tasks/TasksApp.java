@@ -1,10 +1,7 @@
 package com.example.application.views.tasks;
 
 import com.example.application.components.ThemeButton;
-import com.example.application.data.PersonalSubtask;
-import com.example.application.data.PersonalTask;
-import com.example.application.data.PublicSubtask;
-import com.example.application.data.PublicTask;
+import com.example.application.data.*;
 import com.example.application.services.CrmServiceRest;
 import com.example.application.views.authentication.SignUpForm;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -80,6 +77,7 @@ public class TasksApp extends AppLayout {
         button.addClickListener(click -> {
             List<PublicTask> publicTasks = service.getPublicTasks();
             List<PersonalTask> personalTasks = service.getPersonalTasks();
+            User user = service.getUser();
             if (personalTasks == null)
                 personalTasks = new ArrayList<>();
 
@@ -88,7 +86,8 @@ public class TasksApp extends AppLayout {
 
             setContent(new TasksTabs(
                     publicTasks,
-                    personalTasks
+                    personalTasks,
+                    user.getUsername()
             ));
         });
         return button;
