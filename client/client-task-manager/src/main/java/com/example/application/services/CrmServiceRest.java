@@ -37,20 +37,20 @@ public class CrmServiceRest {
     }
 
 
-    public List<User> getAllUsers() {
-
-        System.out.println("Fetching all Comment objects through REST..");
-
-
-////        return restTemplate.exchange(
-////                serverUrl + "/users",
-////                HttpMethod.GET,
-////                null,
-////                new ParameterizedTypeReference<List<User>>() {
-////                }
-//        ).getBody();
-        return new ArrayList<>();
-    }
+//    public List<User> getAllUsers() {
+//
+//        System.out.println("Fetching all Comment objects through REST..");
+//
+//
+//////        return restTemplate.exchange(
+//////                serverUrl + "/users",
+//////                HttpMethod.GET,
+//////                null,
+//////                new ParameterizedTypeReference<List<User>>() {
+//////                }
+////        ).getBody();
+//        return new ArrayList<>();
+//    }
 
     public List<PublicTask> getPublicTasks(){
         if (bearerToken != null){

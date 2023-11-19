@@ -39,13 +39,14 @@ public class User {
     @JsonIgnore
     private List<PublicTask> publicTasks;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "users_and_public_subtasks"
-//            , joinColumns = @JoinColumn(name = "id_user")
-//            , inverseJoinColumns = @JoinColumn(name = "id_public_subtask")
-//    )
-//    private List<PublicSubtask> publicSubtasks;
+    @ManyToMany
+    @JoinTable(
+            name = "users_and_public_subtasks"
+            , joinColumns = @JoinColumn(name = "id_user")
+            , inverseJoinColumns = @JoinColumn(name = "id_public_subtask")
+    )
+    @JsonIgnore
+    private List<PublicSubtask> publicSubtasks;
 
     @OneToMany(fetch = FetchType.LAZY
             ,cascade = CascadeType.ALL

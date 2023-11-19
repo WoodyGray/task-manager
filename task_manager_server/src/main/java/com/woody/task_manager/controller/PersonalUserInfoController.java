@@ -30,7 +30,7 @@ public class PersonalUserInfoController {
 
     @GetMapping("/user")
     public ResponseEntity<?> getUser(@RequestHeader (name = "Authorization") String token){
-        User user = userService.findByToken(token);
+        User user = userService.findByToken(token.substring(7));
         if (user == null){
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "user is null"),
                     HttpStatus.BAD_REQUEST);

@@ -3,6 +3,7 @@ package com.woody.task_manager.service;
 import com.woody.task_manager.dto.RegistrationUserDto;
 import com.woody.task_manager.dto.UpdateUserPasswordDto;
 import com.woody.task_manager.entity.PersonalTask;
+import com.woody.task_manager.entity.PublicSubtask;
 import com.woody.task_manager.entity.PublicTask;
 import com.woody.task_manager.entity.User;
 import com.woody.task_manager.exception.AppError;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,7 +75,13 @@ public class UserService implements UserDetailsService {
 
     public ResponseEntity<?> findPublicTaskByToken(String token){
         User user = findByToken(token);
-        List<PublicTask> publicTasks = user.getPublicTasks();
+        List<PublicTask> publicTasks = new ArrayList<>();
+        publicTasks = user.getPublicTasks();
+//        for (PublicSubtask subtask: user.getPublicSubtasks()
+//             ) {
+//            if (!publicTasks.contains(subtask.getPublicTask()))
+//                publicTasks.add(subtask.getPublicTask());
+//        }
         if (publicTasks == null || publicTasks.isEmpty()){
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "public task list is null"),
                     HttpStatus.BAD_REQUEST);

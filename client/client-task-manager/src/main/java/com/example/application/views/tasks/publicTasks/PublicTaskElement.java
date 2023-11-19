@@ -24,11 +24,43 @@ public class PublicTaskElement extends TaskElement {
     public PublicTaskElement(PublicTask task, String username) {
         super(task, username);
         publicTask = task;
+        isHost = false;
         initHostsLayout(task.getUsers());
-        if (isHost)
-        initExecutorsLayout(task.getPublicSubtasks());
+        if (isHost){
+            configureForHost();
+        }else{
+            configureForExecutor();
+        }
+    }
+
+//    public PublicTaskElement(PublicTask task) {
+//        super(task);
+//        publicTask = task;
+//        initHostsLayout(task.getUsers());
+//        configureForExecutor();
+//    }
+
+    private void configureForHost(){
+        initExecutorsLayout(publicTask.getPublicSubtasks());
 //        initUsersAvatars(task.getUsers());
-        initSubtasksAccordion(task.getPublicSubtasks());
+        initSubtasksAccordion(publicTask.getPublicSubtasks());
+
+        super.configureShowMoreButton();
+        super.configureBackButton();
+        getFirstButtonLayout().add(getShowMoreButton());
+        getSecondButtonLayout().add(getBackButton());
+
+        configureFirstLayout();
+        getTaskLayout().add(getFirstLayout());
+        getTaskLayout().add(getFirstButtonLayout());
+
+        configureSecondLayout();
+    }
+
+    private void configureForExecutor(){
+        initExecutorsLayout(publicTask.getPublicSubtasks());
+//        initUsersAvatars(task.getUsers());
+        initSubtasksAccordion(publicTask.getPublicSubtasks());
 
         super.configureShowMoreButton();
         super.configureBackButton();
@@ -55,6 +87,13 @@ public class PublicTaskElement extends TaskElement {
 
     public void initHostsLayout(List<User> users){
         hostsAvatars = new AvatarGroup();
+        for (User user: users
+             ) {
+            if (user.getUsername().equals(username)) {
+                isHost = true;
+                break;
+            }
+        }
         addAvatarsToGroup(users, hostsAvatars);
         Paragraph hosts = new Paragraph("hosts:");
         hostsLayout = new HorizontalLayout(hosts, hostsAvatars);

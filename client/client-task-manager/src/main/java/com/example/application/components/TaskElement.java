@@ -22,8 +22,13 @@ public class TaskElement<T extends Task>  {
     private String username;
 
     public TaskElement(T task, String username) {
-        this.task = task;
+        this(task);
         this.username = username;
+
+    }
+
+    public TaskElement(T task) {
+        this.task = task;
         description = new Span("Description: "
                 + task.getDescription());
         deadLine = new Span("Deadline: "
