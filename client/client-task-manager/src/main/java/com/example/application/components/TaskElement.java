@@ -2,7 +2,10 @@ package com.example.application.components;
 
 import com.example.application.data.Task;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import lombok.Data;
@@ -46,7 +49,8 @@ public class TaskElement<T extends Task>  {
     }
 
     public void configureShowMoreButton(){
-        Button showMoreButton =  new Button("Show more");
+        Button showMoreButton =  new Button();
+        showMoreButton.setIcon(new Icon(VaadinIcon.CHEVRON_DOWN));
         showMoreButton.addClickListener(event -> {
 //            taskLayout.remove(firstLayout);
             taskLayout.remove(firstButtonLayout);
@@ -57,7 +61,8 @@ public class TaskElement<T extends Task>  {
     }
 
     public void configureBackButton(){
-        Button backButton = new Button("Back");
+        Button backButton = new Button();
+        backButton.setIcon(new Icon(VaadinIcon.CHEVRON_UP));
         backButton.addClickListener(event -> {
             taskLayout.remove(secondLayout);
             taskLayout.remove(secondButtonLayout);

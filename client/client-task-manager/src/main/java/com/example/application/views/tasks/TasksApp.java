@@ -1,5 +1,6 @@
 package com.example.application.views.tasks;
 
+import com.example.application.components.AddTaskDiv;
 import com.example.application.components.ThemeButton;
 import com.example.application.data.*;
 import com.example.application.services.CrmServiceRest;
@@ -42,7 +43,8 @@ public class TasksApp extends AppLayout {
     private Tabs getTabs(){
         Tabs tabs = new Tabs();
         tabs.add(createTab(VaadinIcon.TASKS, "Tasks"),
-                createTab(VaadinIcon.USER, "Account"));
+                createTab(VaadinIcon.USER, "Account"),
+                createTab(VaadinIcon.PLUS_CIRCLE, "Add task"));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         return tabs;
     }
@@ -64,12 +66,25 @@ public class TasksApp extends AppLayout {
                 break;
             case "Account":
                 link.add(configureAccountButton());
+                break;
+            case "Add task":
+                link.add(configureAddTaskButton());
         }
 
 
         link.setTabIndex(-1);
 
         return new Tab(link);
+    }
+
+    private Button configureAddTaskButton(){
+        Button button = new Button("Add task");
+        button.addClickListener(click -> {
+            setContent(new AddTaskDiv(
+                    service
+            ));
+        });
+        return button;
     }
 
     private Button configureTasksButton(){
