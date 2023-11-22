@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 22 2023 г., 13:42
+-- Время создания: Ноя 22 2023 г., 09:44
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -144,7 +144,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `email`) VALUES
 (1, 'woody', '$2a$10$mlzfOU/RU5nmg6JaK.sE4ehCQnenWlHaKahLX6nOXX1Lvj06cXcbO', 'Woody White', 'woodywhite@mail.ru'),
 (2, 'whalter', '$2a$10$DyFqpudbD.g37Io4.0zRK.eml7V02xf1dW6nARe1mIwlAEFDYNLCe', 'Whalter White', 'whalterwhite@mail.ru'),
 (3, 'jessee', '$2a$10$b51werAfcRvElXScuPcIMueTmOptE/9KXgDl9YDJ55faTvUxayd3K', 'Jessee Pinkman', 'jesseepinkman@mail.ru'),
-(5, 'gustavo', '$2a$10$LdMBkzeKeZGJl9RF88THQuq0mACnqSavCpNThui3XSxvnE4iOgcaG', 'Gus', 'woody@mail.ru');
+(5, 'gustavo', '$2a$10$LdMBkzeKeZGJl9RF88THQuq0mACnqSavCpNThui3XSxvnE4iOgcaG', 'Gus', 'woody@mail.ru'),
+(6, 'thewoody', '$2a$10$BcWmImQBLQuPFrP91nQRA.JLonlGrqGBSH27IeUnSDucJd.j6w/ky', 'woody white', 'w@mail.com');
 
 -- --------------------------------------------------------
 
@@ -181,8 +182,8 @@ CREATE TABLE `users_and_public_tasks` (
 --
 
 INSERT INTO `users_and_public_tasks` (`id_user`, `id_public_task`) VALUES
-(2, 1),
-(3, 1);
+(5, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -203,7 +204,8 @@ INSERT INTO `users_and_roles` (`id_user`, `id_role`) VALUES
 (1, 1),
 (2, 2),
 (3, 2),
-(5, 2);
+(5, 2),
+(6, 2);
 
 --
 -- Индексы сохранённых таблиц
@@ -307,7 +309,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -344,6 +346,13 @@ ALTER TABLE `users_and_public_subtasks`
 ALTER TABLE `users_and_public_tasks`
   ADD CONSTRAINT `users_and_public_tasks_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `users_and_public_tasks_ibfk_2` FOREIGN KEY (`id_public_task`) REFERENCES `public_tasks` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `users_and_roles`
+--
+ALTER TABLE `users_and_roles`
+  ADD CONSTRAINT `users_and_roles_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`),
+  ADD CONSTRAINT `users_and_roles_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
