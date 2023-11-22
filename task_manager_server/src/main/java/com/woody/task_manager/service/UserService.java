@@ -7,6 +7,7 @@ import com.woody.task_manager.entity.PublicSubtask;
 import com.woody.task_manager.entity.PublicTask;
 import com.woody.task_manager.entity.User;
 import com.woody.task_manager.exception.AppError;
+import com.woody.task_manager.repository.PublicTaskRepository;
 import com.woody.task_manager.repository.RoleRepository;
 import com.woody.task_manager.repository.UserRepository;
 import com.woody.task_manager.util.JwtTokenUtils;
@@ -30,8 +31,10 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PublicTaskRepository publicTaskRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtils jwtTokenUtils;
+
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -41,6 +44,11 @@ public class UserService implements UserDetailsService {
     @Autowired
     public void setRoleRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setPublicTaskRepository(PublicTaskRepository publicTaskRepository) {
+        this.publicTaskRepository = publicTaskRepository;
     }
 
     @Autowired
@@ -73,15 +81,31 @@ public class UserService implements UserDetailsService {
 //        return ResponseEntity.ok(user);
 //    }
 
-    public ResponseEntity<?> findPublicTaskByToken(String token){
+    public ResponseEntity<?> findPublicTaskByToken(String token) {
         User user = findByToken(token);
         List<PublicTask> publicTasks = new ArrayList<>();
         publicTasks = user.getPublicTasks();
-//        for (PublicSubtask subtask: user.getPublicSubtasks()
-//             ) {
+        int publicTaskId;
+        boolean subtaskNotInList;
+        for (PublicSubtask subtask: user.getPublicSubtasks()
+             ) {
+            publicTaskId = subtask.getPublicTask().getId();
+            subtaskNotInList = true;
+            for (PublicTask task: publicTasks
+                 ) {
+                if (task.getId() == publicTaskId){
+                    subtaskNotInList = false;
+                    break;
+                }
+            }
+            if (subtaskNotInList)
+                publicTasks.add(
+                        publicTaskRepository.findById(publicTaskId)
+                                .orElseThrow(() -> new RuntimeException("no such task"))
+                );
 //            if (!publicTasks.contains(subtask.getPublicTask()))
 //                publicTasks.add(subtask.getPublicTask());
-//        }
+        }
         if (publicTasks == null || publicTasks.isEmpty()){
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "public task list is null"),
                     HttpStatus.BAD_REQUEST);
