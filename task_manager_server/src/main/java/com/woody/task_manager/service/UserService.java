@@ -89,22 +89,25 @@ public class UserService implements UserDetailsService {
         boolean subtaskNotInList;
         for (PublicSubtask subtask: user.getPublicSubtasks()
              ) {
-            publicTaskId = subtask.getPublicTask().getId();
-            subtaskNotInList = true;
-            for (PublicTask task: publicTasks
-                 ) {
-                if (task.getId() == publicTaskId){
-                    subtaskNotInList = false;
-                    break;
-                }
+//            publicTaskId = subtask.getPublicTask().getId();
+//            subtaskNotInList = true;
+//            for (PublicTask task: publicTasks
+//                 ) {
+//                if (task.getId() == publicTaskId){
+//                    subtaskNotInList = false;
+//                    break;
+//                }
+//            }
+//            if (subtaskNotInList) {
+//                PublicTask publicTask = publicTaskRepository
+//                        .findById(publicTaskId)
+//                        .get();
+//                publicTasks.add(
+//                        publicTask
+//                );
+            if (!publicTasks.contains(subtask.getPublicTask())){
+                publicTasks.add(subtask.getPublicTask());
             }
-            if (subtaskNotInList)
-                publicTasks.add(
-                        publicTaskRepository.findById(publicTaskId)
-                                .orElseThrow(() -> new RuntimeException("no such task"))
-                );
-//            if (!publicTasks.contains(subtask.getPublicTask()))
-//                publicTasks.add(subtask.getPublicTask());
         }
         if (publicTasks == null || publicTasks.isEmpty()){
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "public task list is null"),

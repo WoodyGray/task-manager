@@ -1,6 +1,7 @@
 package com.woody.task_manager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "public_tasks")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 public class PublicTask implements Task{
 

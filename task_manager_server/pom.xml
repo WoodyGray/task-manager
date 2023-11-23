@@ -61,6 +61,24 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.vaadin/vaadin-spring-boot-starter -->
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-spring-boot-starter</artifactId>
+			<version>24.2.4</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.vaadin/vaadin-bom -->
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-bom</artifactId>
+			<version>24.2.4</version>
+			<type>pom</type>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
