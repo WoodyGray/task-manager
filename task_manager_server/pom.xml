@@ -62,21 +62,29 @@
 			<version>0.9.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.vaadin/vaadin-spring-boot-starter -->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-spring-boot-starter</artifactId>
-			<version>24.2.4</version>
-		</dependency>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/com.vaadin/vaadin-spring-boot-starter &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.vaadin</groupId>-->
+<!--			<artifactId>vaadin-core</artifactId>-->
+<!--			<version>24.2.4</version>-->
+<!--		</dependency>-->
 
 
-		<!-- https://mvnrepository.com/artifact/com.vaadin/vaadin-bom -->
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/com.vaadin/vaadin-bom &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.vaadin</groupId>-->
+<!--			<artifactId>vaadin-bom</artifactId>-->
+<!--			<version>24.2.4</version>-->
+<!--			<type>pom</type>-->
+<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket -->
 		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-bom</artifactId>
-			<version>24.2.4</version>
-			<type>pom</type>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+			<version>3.1.5</version>
 		</dependency>
+
 
 
 	</dependencies>

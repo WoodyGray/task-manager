@@ -3,30 +3,40 @@ package com.example.application.views.tasks;
 import com.example.application.components.AddTaskDiv;
 import com.example.application.components.ThemeButton;
 import com.example.application.data.*;
+import com.example.application.notification.NotificationListener;
 import com.example.application.services.CrmServiceRest;
 import com.example.application.views.authentication.SignUpForm;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.shared.communication.PushMode;
+import com.vaadin.flow.shared.ui.Transport;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
+@Push(value = PushMode.MANUAL, transport = Transport.WEBSOCKET)
 public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;
+    private final NotificationListener notificationListener;
 
-    public TasksApp(CrmServiceRest crmServiceRest){
+    public TasksApp(CrmServiceRest crmServiceRest,
+                    NotificationListener notificationListener){
+        this.notificationListener = notificationListener;
         service = crmServiceRest;
         DrawerToggle toggle = new DrawerToggle();
         H1 title = new H1("Task manager");
@@ -112,5 +122,10 @@ public class TasksApp extends AppLayout {
         Button button = new Button("Account");
         button.addClickListener(click -> setContent(new SignUpForm()));
         return button;
+    }
+
+    // Этот метод будет вызван автоматически при получении уведомления
+    public void updateNotification(String newNotification) {
+        UI.getCurrent().access(() -> Notification.show(newNotification));
     }
 }
