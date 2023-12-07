@@ -23,7 +23,7 @@ import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
-@JsModule(".src/main/java/com/example/application/notification/notification-script.js")
+@JsModule(".src/notification-script.js")
 public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;

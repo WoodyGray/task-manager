@@ -1,5 +1,7 @@
 package com.woody.task_manager;
 
+import com.woody.task_manager.notification.NotificationController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
