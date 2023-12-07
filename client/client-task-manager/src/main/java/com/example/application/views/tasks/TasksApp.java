@@ -10,6 +10,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -28,15 +29,13 @@ import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
-@Push(value = PushMode.MANUAL, transport = Transport.WEBSOCKET)
+//@JsModule(".src/main/java/com/example/application/notification/notification-script.js")
 public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;
-    private final NotificationListener notificationListener;
 
-    public TasksApp(CrmServiceRest crmServiceRest,
-                    NotificationListener notificationListener){
-        this.notificationListener = notificationListener;
+    public TasksApp(CrmServiceRest crmServiceRest){
+
         service = crmServiceRest;
         DrawerToggle toggle = new DrawerToggle();
         H1 title = new H1("Task manager");
@@ -122,10 +121,5 @@ public class TasksApp extends AppLayout {
         Button button = new Button("Account");
         button.addClickListener(click -> setContent(new SignUpForm()));
         return button;
-    }
-
-    // Этот метод будет вызван автоматически при получении уведомления
-    public void updateNotification(String newNotification) {
-        UI.getCurrent().access(() -> Notification.show(newNotification));
     }
 }
