@@ -8,10 +8,12 @@ import com.example.application.views.authentication.SignUpForm;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
@@ -23,12 +25,17 @@ import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
+
 //@JsModule("D:/programs/java/github/task-manager/client/client-task-manager/frontend/notification-script.js")
+
+//@JsModule(".src/main/java/com/example/application/notification/notification-script.js")
+@JavaScript("./notification-script.js")
 public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;
 
     public TasksApp(CrmServiceRest crmServiceRest){
+        getElement().executeJs("");
 
         service = crmServiceRest;
         DrawerToggle toggle = new DrawerToggle();

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class NotificationThread extends Thread {
+
     @Autowired
     private NotificationController notificationController;
 
@@ -13,12 +14,13 @@ public class NotificationThread extends Thread {
         System.out.println("Поток начал выполнение.");
 
         try {
-            while (true) {
+            // Задержка на 5 секунд (5000 миллисекунд)
+            while (true){
                 Message message = new Message();
                 message.setTo("whalter");
-                message.setText("cook meth");
+                message.setText("lets start cook");
                 notificationController.sendToSpecificUser(message);
-                // Задержка на 5 секунд (5000 миллисекунд)
+                System.out.println(1);
                 Thread.sleep(5000);
             }
         } catch (InterruptedException e) {
@@ -26,5 +28,13 @@ public class NotificationThread extends Thread {
         }
 
         System.out.println("Поток завершил выполнение.");
+    }
+
+    public static void main(String[] args) {
+        // Создание экземпляра потока
+        NotificationThread myThread = new NotificationThread();
+
+        // Запуск потока
+        myThread.start();
     }
 }

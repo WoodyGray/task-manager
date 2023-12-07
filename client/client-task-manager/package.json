@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@polymer/polymer": "3.5.1",
+    "@stomp/stompjs": "^7.0.0",
     "@vaadin/a11y-base": "24.2.0",
     "@vaadin/accordion": "24.2.0",
     "@vaadin/app-layout": "24.2.0",
@@ -78,7 +79,10 @@
     "date-fns": "2.29.3",
     "lit": "2.8.0",
     "mobile-drag-drop": "2.3.0-rc.2",
-    "proj4": "2.9.1"
+    "net": "^1.0.2",
+    "proj4": "2.9.1",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "5.0.2",
@@ -193,7 +197,7 @@
       "workbox-core": "7.0.0",
       "workbox-precaching": "7.0.0"
     },
-    "hash": "3528802ccc0a0cc916ed0fe8fafed5b853e5f84c599e9fa068106d9f91aec8d5"
+    "hash": "7e0debc659a9911e45f090e99c119f4782b98684cba5c975b4802c6d8ed4cbcf"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -271,6 +275,10 @@
     "proj4": "$proj4",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "date-fns": "$date-fns",
-    "mobile-drag-drop": "$mobile-drag-drop"
+    "mobile-drag-drop": "$mobile-drag-drop",
+    "@stomp/stompjs": "$@stomp/stompjs",
+    "sockjs-client": "$sockjs-client",
+    "net": "$net",
+    "stompjs": "$stompjs"
   }
 }

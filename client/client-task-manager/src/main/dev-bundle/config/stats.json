@@ -1,6 +1,7 @@
 {
  "packageJsonDependencies": {
   "@polymer/polymer": "3.5.1",
+  "@stomp/stompjs": "^7.0.0",
   "@vaadin/a11y-base": "24.2.0",
   "@vaadin/accordion": "24.2.0",
   "@vaadin/app-layout": "24.2.0",
@@ -75,7 +76,10 @@
   "date-fns": "2.29.3",
   "lit": "2.8.0",
   "mobile-drag-drop": "2.3.0-rc.2",
-  "proj4": "2.9.1"
+  "net": "^1.0.2",
+  "proj4": "2.9.1",
+  "sockjs-client": "^1.6.1",
+  "stompjs": "^2.3.3"
  },
  "npmModules": {
   "@lit/reactive-element": "1.6.3",
@@ -243,7 +247,6 @@
   "@vaadin/vaadin-lumo-styles/vaadin-iconset.js",
   "@vaadin/vertical-layout/theme/lumo/vaadin-vertical-layout.js",
   "@vaadin/virtual-list/theme/lumo/vaadin-virtual-list.js",
-  "D:/programs/java/github/task-manager/client/client-task-manager/frontend/notification-script.js",
   "Frontend/generated/jar-resources/buttonFunctions.js",
   "Frontend/generated/jar-resources/comboBoxConnector.js",
   "Frontend/generated/jar-resources/contextMenuConnector.js",
@@ -263,10 +266,11 @@
   "Frontend/generated/jar-resources/vaadin-grid-flow-selection-column.js",
   "Frontend/generated/jar-resources/vaadin-map/mapConnector.js",
   "Frontend/generated/jar-resources/vaadin-time-picker/timepickerConnector.js",
-  "Frontend/generated/jar-resources/virtualListConnector.js"
+  "Frontend/generated/jar-resources/virtualListConnector.js",
+  "Frontend/notification-script.js"
  ],
  "frontendHashes": {
-  "notification-script.js": "a29774f55e3c3ee42beddfa05a233b4afbcf7d469ca24bc0de16eb618aa50221",
+  "notification-script.js": "87edb4904acefa2a7661b7a91b239da2e680bdfc50b064c7033a6226e40dc998",
   "buttonFunctions.js": "c852123f9b2c44eb75e555119d3e05a7dbe78b91d0ab616feb9df1654474707d",
   "comboBoxConnector.js": "1d004c3dae9c76f8bcc68678abe1b8f7bdc8b456f5c9c4c7f190df8ed25d66cd",
   "contextMenuConnector.js": "8960e00884b9a8b62e24be63e03fe7045dcb9b6844a8a238eb4619d5595e2cfc",
@@ -292,7 +296,7 @@
   "flowcrmtutorial": "{\n  \"lumoImports\" : [ \"typography\", \"color\", \"spacing\", \"badge\", \"utility\" ]\n}"
  },
  "entryScripts": [
-  "VAADIN/build/indexhtml-fa867faf.js"
+  "VAADIN/build/indexhtml-ede3df14.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -325,8 +329,8 @@
    "version": "24.2.0"
   }
  },
- "packageJsonHash": "3528802ccc0a0cc916ed0fe8fafed5b853e5f84c599e9fa068106d9f91aec8d5",
+ "packageJsonHash": "7e0debc659a9911e45f090e99c119f4782b98684cba5c975b4802c6d8ed4cbcf",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-fa867faf.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-ede3df14.js\"></script>"
  ]
 }
