@@ -55,5 +55,5 @@ public class TaskService {
     public List<PersonalSubtask> getAllPersonalSubtask(){
         return (List<PersonalSubtask>) personalSubtaskRepository.findAll();
     }
-    
+
 }
