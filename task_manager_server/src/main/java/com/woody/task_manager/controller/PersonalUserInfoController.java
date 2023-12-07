@@ -3,6 +3,8 @@ package com.woody.task_manager.controller;
 import com.woody.task_manager.dto.UpdateUserPasswordDto;
 import com.woody.task_manager.entity.User;
 import com.woody.task_manager.exception.AppError;
+import com.woody.task_manager.notification.Message;
+import com.woody.task_manager.notification.NotificationController;
 import com.woody.task_manager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +12,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.ExecutionException;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/personal-info")
 public class PersonalUserInfoController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private NotificationController controller;
 
 
     @GetMapping("/public-tasks")
@@ -45,6 +48,13 @@ public class PersonalUserInfoController {
                                  @RequestBody UpdateUserPasswordDto updateUserPasswordDto){
         return userService.updatePasswordByToken(token.substring(7),
                 updateUserPasswordDto);
+    }
+
+    @GetMapping("/notification")
+    public ResponseEntity<?> getNotification(@RequestHeader (name = "Authorization") String token,
+                                             @RequestBody Message message){
+        controller.sendToSpecificUser(message);
+        return ResponseEntity.ok(message);
     }
 
 //    @GetMapping("/admin")

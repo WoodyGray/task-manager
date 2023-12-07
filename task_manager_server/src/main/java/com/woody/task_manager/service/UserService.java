@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private PublicTaskRepository publicTaskRepository;
+//    private PublicTaskRepository publicTaskRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtils jwtTokenUtils;
 
@@ -46,10 +46,10 @@ public class UserService implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
-    @Autowired
-    public void setPublicTaskRepository(PublicTaskRepository publicTaskRepository) {
-        this.publicTaskRepository = publicTaskRepository;
-    }
+//    @Autowired
+//    public void setPublicTaskRepository(PublicTaskRepository publicTaskRepository) {
+//        this.publicTaskRepository = publicTaskRepository;
+//    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -89,22 +89,6 @@ public class UserService implements UserDetailsService {
         boolean subtaskNotInList;
         for (PublicSubtask subtask: user.getPublicSubtasks()
              ) {
-//            publicTaskId = subtask.getPublicTask().getId();
-//            subtaskNotInList = true;
-//            for (PublicTask task: publicTasks
-//                 ) {
-//                if (task.getId() == publicTaskId){
-//                    subtaskNotInList = false;
-//                    break;
-//                }
-//            }
-//            if (subtaskNotInList) {
-//                PublicTask publicTask = publicTaskRepository
-//                        .findById(publicTaskId)
-//                        .get();
-//                publicTasks.add(
-//                        publicTask
-//                );
             if (!publicTasks.contains(subtask.getPublicTask())){
                 publicTasks.add(subtask.getPublicTask());
             }

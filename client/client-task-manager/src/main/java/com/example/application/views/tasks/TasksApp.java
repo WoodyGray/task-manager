@@ -3,10 +3,8 @@ package com.example.application.views.tasks;
 import com.example.application.components.AddTaskDiv;
 import com.example.application.components.ThemeButton;
 import com.example.application.data.*;
-import com.example.application.notification.NotificationListener;
 import com.example.application.services.CrmServiceRest;
 import com.example.application.views.authentication.SignUpForm;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -14,22 +12,18 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.shared.communication.PushMode;
-import com.vaadin.flow.shared.ui.Transport;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
-//@JsModule(".src/main/java/com/example/application/notification/notification-script.js")
+@JsModule(".src/main/java/com/example/application/notification/notification-script.js")
 public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;

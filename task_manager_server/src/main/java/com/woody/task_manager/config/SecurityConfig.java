@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .antMatchers("/personal-info").authenticated()
 //                .antMatchers("/info").authenticated()
                 .antMatchers("/admin").hasRole("ADMIN")
+                .mvcMatchers("/","/ws/**")
+                .permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
