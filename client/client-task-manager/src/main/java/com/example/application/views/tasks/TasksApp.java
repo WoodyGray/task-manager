@@ -25,17 +25,11 @@ import java.util.List;
 
 @Route("tasks")
 @PageTitle("Sign-up | Vaadin CRM")
-
-//@JsModule("D:/programs/java/github/task-manager/client/client-task-manager/frontend/notification-script.js")
-
-//@JsModule(".src/main/java/com/example/application/notification/notification-script.js")
-@JavaScript("./notification-script.js")
 public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;
 
     public TasksApp(CrmServiceRest crmServiceRest){
-        getElement().executeJs("");
 
         service = crmServiceRest;
         DrawerToggle toggle = new DrawerToggle();

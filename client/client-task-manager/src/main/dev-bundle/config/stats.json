@@ -267,10 +267,10 @@
   "Frontend/generated/jar-resources/vaadin-map/mapConnector.js",
   "Frontend/generated/jar-resources/vaadin-time-picker/timepickerConnector.js",
   "Frontend/generated/jar-resources/virtualListConnector.js",
-  "Frontend/notification-script.js"
+  "Frontend/web-push-toggle.ts"
  ],
  "frontendHashes": {
-  "notification-script.js": "87edb4904acefa2a7661b7a91b239da2e680bdfc50b064c7033a6226e40dc998",
+  "web-push-toggle.ts": "d9d9126c64a0591874a24cdf97d283ee82fe9f9a837ea810e2413fa6c14c9719",
   "buttonFunctions.js": "c852123f9b2c44eb75e555119d3e05a7dbe78b91d0ab616feb9df1654474707d",
   "comboBoxConnector.js": "1d004c3dae9c76f8bcc68678abe1b8f7bdc8b456f5c9c4c7f190df8ed25d66cd",
   "contextMenuConnector.js": "8960e00884b9a8b62e24be63e03fe7045dcb9b6844a8a238eb4619d5595e2cfc",
@@ -296,7 +296,7 @@
   "flowcrmtutorial": "{\n  \"lumoImports\" : [ \"typography\", \"color\", \"spacing\", \"badge\", \"utility\" ]\n}"
  },
  "entryScripts": [
-  "VAADIN/build/indexhtml-ede3df14.js"
+  "VAADIN/build/indexhtml-7a5f0d6d.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -331,6 +331,6 @@
  },
  "packageJsonHash": "7e0debc659a9911e45f090e99c119f4782b98684cba5c975b4802c6d8ed4cbcf",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-ede3df14.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-7a5f0d6d.js\"></script>"
  ]
 }
