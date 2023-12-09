@@ -51,6 +51,9 @@ public class CrmServiceRest {
 ////        ).getBody();
 //        return new ArrayList<>();
 //    }
+    public String getBearerToken(){
+        return bearerToken.getBearerToken();
+    }
 
     public List<PublicTask> getPublicTasks(){
         if (bearerToken != null){

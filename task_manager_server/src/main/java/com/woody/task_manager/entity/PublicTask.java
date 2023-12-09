@@ -29,7 +29,7 @@ public class PublicTask implements Task{
     @Column(name = "deadline")
     private Date deadline;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany()
     @JoinTable(
             name = "users_and_public_tasks"
             , joinColumns = @JoinColumn(name = "id_public_task")

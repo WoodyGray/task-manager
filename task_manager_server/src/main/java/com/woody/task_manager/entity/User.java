@@ -63,6 +63,12 @@ public class User {
     @JsonIgnore
     private Collection<Role> roles;
 
+    @OneToMany(
+            fetch = FetchType.LAZY
+            ,cascade = CascadeType.ALL
+            , mappedBy = "user")
+    private List<SubscriptionEntity> subscriptions;
+
 
     public void addPersonalTaskToUser(PersonalTask personalTask){
         if (this.personalTasks == null){

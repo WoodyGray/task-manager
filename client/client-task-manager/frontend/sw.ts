@@ -84,51 +84,51 @@ if (process.env.NODE_ENV === 'development' && VITE_ENABLED) {
 
   // Cache /VAADIN/* resources in dev mode. Ensure the Vite specific URLs on another port are not handled to avoid excessive logging.
   registerRoute(
-    ({ url }) => url.port === scope.port && url.pathname.startsWith(`${scope.pathname}VAADIN/`),
-    networkFirst
+      ({ url }) => url.port === scope.port && url.pathname.startsWith(`${scope.pathname}VAADIN/`),
+      networkFirst
   );
 }
 
 registerRoute(
-  new NavigationRoute(async (context) => {
-    async function serveOfflineFallback() {
-      const response = await matchPrecache(offlinePath);
-      return response ? rewriteBaseHref(response) : undefined;
-    }
+    new NavigationRoute(async (context) => {
+      async function serveOfflineFallback() {
+        const response = await matchPrecache(offlinePath);
+        return response ? rewriteBaseHref(response) : undefined;
+      }
 
-    function serveResourceFromCache() {
-      // Always serve the offline fallback at the scope path.
-      if (context.url.pathname === scope.pathname) {
+      function serveResourceFromCache() {
+        // Always serve the offline fallback at the scope path.
+        if (context.url.pathname === scope.pathname) {
+          return serveOfflineFallback();
+        }
+
+        if (isManifestEntryURL(context.url)) {
+          return matchPrecache(context.request);
+        }
+
         return serveOfflineFallback();
+      };
+
+      // Try to serve the resource from the cache when offline is detected.
+      if (!self.navigator.onLine) {
+        const response = await serveResourceFromCache();
+        if (response) {
+          return response;
+        }
       }
 
-      if (isManifestEntryURL(context.url)) {
-        return matchPrecache(context.request);
+      // Sometimes navigator.onLine is not reliable,
+      // try to serve the resource from the cache also in the case of a network failure.
+      try {
+        return await networkOnly.handle(context);
+      } catch (error) {
+        const response = await serveResourceFromCache();
+        if (response) {
+          return response;
+        }
+        throw error;
       }
-
-      return serveOfflineFallback();
-    };
-
-    // Try to serve the resource from the cache when offline is detected.
-    if (!self.navigator.onLine) {
-      const response = await serveResourceFromCache();
-      if (response) {
-        return response;
-      }
-    }
-
-    // Sometimes navigator.onLine is not reliable,
-    // try to serve the resource from the cache also in the case of a network failure.
-    try {
-      return await networkOnly.handle(context);
-    } catch (error) {
-      const response = await serveResourceFromCache();
-      if (response) {
-        return response;
-      }
-      throw error;
-    }
-  })
+    })
 );
 
 precacheAndRoute(manifestEntries);

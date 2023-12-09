@@ -1,17 +1,13 @@
 package com.woody.task_manager.service;
 
-import com.woody.task_manager.entity.PersonalSubtask;
-import com.woody.task_manager.entity.PersonalTask;
-import com.woody.task_manager.entity.PublicSubtask;
-import com.woody.task_manager.entity.PublicTask;
-import com.woody.task_manager.repository.PersonalSubtaskRepository;
-import com.woody.task_manager.repository.PersonalTaskRepository;
-import com.woody.task_manager.repository.PublicSubtaskRepository;
-import com.woody.task_manager.repository.PublicTaskRepository;
+import com.woody.task_manager.entity.*;
+import com.woody.task_manager.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -19,6 +15,12 @@ public class TaskService {
     private PublicSubtaskRepository publicSubtaskRepository;
     private PersonalTaskRepository personalTaskRepository;
     private PersonalSubtaskRepository personalSubtaskRepository;
+//    private SubscriptionRepository subscriptionRepository;
+//
+//    @Autowired
+//    public void setSubscriptionRepository(SubscriptionRepository subscriptionRepository) {
+//        this.subscriptionRepository = subscriptionRepository;
+//    }
 
     @Autowired
     public void setPublicTaskRepository(PublicTaskRepository publicTaskRepository) {
@@ -43,9 +45,16 @@ public class TaskService {
     public List<PublicTask> getAllPublicTasks(){
         return (List<PublicTask>) publicTaskRepository.findAll();
     }
+    public List<PublicTask> getAllNoExtractPublicTasks(){
+        return publicTaskRepository.findAllByStatusIsNotLike(2);
+    }
 
     public List<PublicSubtask> getAllPublicSubtask(){
         return (List<PublicSubtask>) publicSubtaskRepository.findAll();
+    }
+
+    public PublicTask getPublicTaskById(Integer id){
+        return publicTaskRepository.findById(id).get();
     }
 
     public List<PersonalTask> getAllPersonalTask(){
@@ -54,6 +63,19 @@ public class TaskService {
 
     public List<PersonalSubtask> getAllPersonalSubtask(){
         return (List<PersonalSubtask>) personalSubtaskRepository.findAll();
+    }
+
+    public void saveTask(PublicTask publicTask){
+        publicTaskRepository.save(publicTask);
+    }
+    public void saveTask(PublicSubtask publicSubtask){
+        publicSubtaskRepository.save(publicSubtask);
+    }
+    public void saveTask(PersonalTask personalTask){
+        personalTaskRepository.save(personalTask);
+    }
+    public void saveTask(PersonalSubtask personalSubtask){
+        personalSubtaskRepository.save(personalSubtask);
     }
 
 }

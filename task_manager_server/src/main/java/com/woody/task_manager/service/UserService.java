@@ -2,10 +2,7 @@ package com.woody.task_manager.service;
 
 import com.woody.task_manager.dto.RegistrationUserDto;
 import com.woody.task_manager.dto.UpdateUserPasswordDto;
-import com.woody.task_manager.entity.PersonalTask;
-import com.woody.task_manager.entity.PublicSubtask;
-import com.woody.task_manager.entity.PublicTask;
-import com.woody.task_manager.entity.User;
+import com.woody.task_manager.entity.*;
 import com.woody.task_manager.exception.AppError;
 import com.woody.task_manager.repository.PublicTaskRepository;
 import com.woody.task_manager.repository.RoleRepository;
@@ -31,7 +28,6 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-//    private PublicTaskRepository publicTaskRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtils jwtTokenUtils;
 
@@ -45,11 +41,6 @@ public class UserService implements UserDetailsService {
     public void setRoleRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
-
-//    @Autowired
-//    public void setPublicTaskRepository(PublicTaskRepository publicTaskRepository) {
-//        this.publicTaskRepository = publicTaskRepository;
-//    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {

@@ -3,7 +3,9 @@ package com.example.application.views.tasks;
 import com.example.application.components.AddTaskDiv;
 import com.example.application.components.ThemeButton;
 import com.example.application.data.*;
+import com.example.application.notification.WebPushToggle;
 import com.example.application.services.CrmServiceRest;
+import com.example.application.services.NotificationServiceRest;
 import com.example.application.views.authentication.SignUpForm;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -29,8 +31,11 @@ public class TasksApp extends AppLayout {
 
     private CrmServiceRest service;
 
-    public TasksApp(CrmServiceRest crmServiceRest){
+    public TasksApp(CrmServiceRest crmServiceRest,
+                    NotificationServiceRest notificationServiceRest){
 
+        notificationServiceRest.setBearerToken(crmServiceRest.getBearerToken());
+        var notifyToggle = new WebPushToggle(notificationServiceRest.getPublicKey());
         service = crmServiceRest;
         DrawerToggle toggle = new DrawerToggle();
         H1 title = new H1("Task manager");
@@ -40,8 +45,18 @@ public class TasksApp extends AppLayout {
         Tabs tabs = getTabs();
 
         addToDrawer(tabs);
-        addToNavbar(toggle, title, ThemeButton.configureThemeButton());
+        addToNavbar(toggle
+                , title
+                , ThemeButton.configureThemeButton()
+                , notifyToggle);
 //        setContent(new ListView(service));
+
+        notifyToggle.addSubscribeListener(e -> {
+            notificationServiceRest.subscribe(e.getSubscription());
+        });
+        notifyToggle.addUnsubscribeListener(e -> {
+            notificationServiceRest.unsubscribe(e.getSubscription());
+        });
     }
 
     private Tabs getTabs(){
