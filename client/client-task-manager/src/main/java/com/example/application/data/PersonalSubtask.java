@@ -1,9 +1,8 @@
 package com.example.application.data;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class PersonalSubtask implements Task{
@@ -11,7 +10,7 @@ public class PersonalSubtask implements Task{
     private int id;
     private String taskName;
     private String description;
-    private Date deadline;
+    private LocalDateTime deadline;
     private int status;
 
     private PersonalTask personalTask;
@@ -19,7 +18,7 @@ public class PersonalSubtask implements Task{
     public PersonalSubtask() {
     }
 
-    public PersonalSubtask(String taskName, String description, Date deadline, int status) {
+    public PersonalSubtask(String taskName, String description, LocalDateTime deadline, int status) {
         this.taskName = taskName;
         this.description = description;
         this.deadline = deadline;

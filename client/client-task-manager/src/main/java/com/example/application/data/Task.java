@@ -1,8 +1,6 @@
 package com.example.application.data;
 
-import lombok.Data;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 public interface Task {
@@ -12,8 +10,8 @@ public interface Task {
     public void setTaskName(String taskName);
     public String getDescription();
     public void setDescription(String description);
-    public Date getDeadline();
-    public void setDeadline(Date date);
+    public LocalDateTime getDeadline();
+    public void setDeadline(LocalDateTime date);
     public int getStatus();
     public void setStatus(int status);
 }

@@ -1,10 +1,9 @@
 package com.example.application.data;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,7 +12,7 @@ public class PersonalTask implements Task {
     private int id;
     private String taskName;
     private String description;
-    private Date deadline;
+    private LocalDateTime deadline;
     private int status;
 
     private User user;
@@ -23,7 +22,7 @@ public class PersonalTask implements Task {
     public PersonalTask() {
     }
 
-    public PersonalTask(String taskName, Date deadline, User user, int status) {
+    public PersonalTask(String taskName, LocalDateTime deadline, User user, int status) {
         this.taskName = taskName;
         this.deadline = deadline;
         this.user = user;

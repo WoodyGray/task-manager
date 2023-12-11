@@ -5,6 +5,7 @@ import com.example.application.data.PersonalTask;
 import com.example.application.data.PublicTask;
 import com.example.application.data.User;
 import com.example.application.services.dto.LogInDto;
+import com.example.application.services.dto.PublicTaskDto;
 import com.example.application.services.dto.SignUpDto;
 import com.example.application.services.dto.TokenResponseDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,21 +37,6 @@ public class CrmServiceRest {
         webClient = builder.baseUrl(baseUrl).build();
     }
 
-
-//    public List<User> getAllUsers() {
-//
-//        System.out.println("Fetching all Comment objects through REST..");
-//
-//
-//////        return restTemplate.exchange(
-//////                serverUrl + "/users",
-//////                HttpMethod.GET,
-//////                null,
-//////                new ParameterizedTypeReference<List<User>>() {
-//////                }
-////        ).getBody();
-//        return new ArrayList<>();
-//    }
     public String getBearerToken(){
         return bearerToken.getBearerToken();
     }
@@ -105,6 +91,22 @@ public class CrmServiceRest {
         }
         return null;
     }
+
+    public void addPublicTask(PublicTaskDto publicTaskDto){
+        String response = webClient
+                .post()
+                .uri(baseUrl + "/personal-info/add-public-task")
+                .header("Authorization"
+                        , "Bearer " + bearerToken.getBearerToken())
+                .body(Mono.just(publicTaskDto), PublicTaskDto.class)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        System.out.println(response);
+    }
+//    public boolean addPersonalTask(){
+//
+//    }
 
     public User getUser(){
         if (bearerToken != null){

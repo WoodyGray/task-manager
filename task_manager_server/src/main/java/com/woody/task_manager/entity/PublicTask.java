@@ -1,12 +1,11 @@
 package com.woody.task_manager.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,7 +26,7 @@ public class PublicTask implements Task{
     private String description;
 
     @Column(name = "deadline")
-    private Date deadline;
+    private LocalDateTime deadline;
 
     @ManyToMany()
     @JoinTable(

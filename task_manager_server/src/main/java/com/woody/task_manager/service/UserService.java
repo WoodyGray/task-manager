@@ -1,5 +1,6 @@
 package com.woody.task_manager.service;
 
+import com.woody.task_manager.dto.PublicTaskDto;
 import com.woody.task_manager.dto.RegistrationUserDto;
 import com.woody.task_manager.dto.UpdateUserPasswordDto;
 import com.woody.task_manager.entity.*;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,8 @@ public class UserService implements UserDetailsService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtils jwtTokenUtils;
+    @Autowired
+    private TaskService taskService;
 
 
     @Autowired
@@ -131,5 +135,23 @@ public class UserService implements UserDetailsService {
         user.setFullName(registrationUserDto.getFullName());
         user.setRoles(List.of(roleRepository.findByName("ROLE_USER").get()));
         return userRepository.save(user);
+    }
+
+    public ResponseEntity<?> addPublicTask(String token, PublicTaskDto publicTaskDto){
+        try {
+            PublicTask publicTask = new PublicTask();
+            publicTask.setTaskName(publicTaskDto.getTaskName());
+            publicTask.setDescription(publicTaskDto.getDescription());
+            publicTask.setDeadline(LocalDateTime.parse(publicTaskDto.getDeadline()));
+            publicTask.addUserToPublicTask(findByToken(token));
+            taskService.saveTask(publicTask);
+            return ResponseEntity.ok("task added success");
+        }catch (Exception e){
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.BAD_REQUEST.value(), "cant add the task"),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
     }
 }

@@ -3,6 +3,7 @@ package com.woody.task_manager.notification;
 import com.woody.task_manager.dto.MessageDto;
 import com.woody.task_manager.entity.PublicTask;
 import com.woody.task_manager.entity.User;
+
 import com.woody.task_manager.service.TaskService;
 import com.woody.task_manager.service.UserService;
 import com.woody.task_manager.service.WebPushService;
@@ -55,9 +56,9 @@ public class NotificationThread extends Thread{
 
     @Transactional
     private void checkPublicTasks(){
-        Date currentDate = new Date();
+        LocalDateTime currentDate = LocalDateTime.now();
         taskService.getAllNoExtractPublicTasks().forEach(publicTask -> {
-            if (currentDate.after(publicTask.getDeadline())){
+            if (currentDate.isAfter(publicTask.getDeadline())){
                 publicTask.setStatus(2);
                 taskService.saveTask(publicTask);
                 cntOfExtractTasks++;
