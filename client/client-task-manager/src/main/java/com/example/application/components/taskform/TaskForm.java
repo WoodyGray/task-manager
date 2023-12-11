@@ -8,6 +8,6 @@ public class TaskForm extends VerticalLayout {
 
     public TaskForm(CrmServiceRest service){
         this.service = service;
-        
+
     }
 }
