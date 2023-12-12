@@ -92,7 +92,7 @@ public class CrmServiceRest {
         return null;
     }
 
-    public void addPublicTask(PublicTaskDto publicTaskDto){
+    public boolean addPublicTask(PublicTaskDto publicTaskDto){
         String response = webClient
                 .post()
                 .uri(baseUrl + "/personal-info/add-public-task")
@@ -103,6 +103,11 @@ public class CrmServiceRest {
                 .bodyToMono(String.class)
                 .block();
         System.out.println(response);
+        if (response.equals("task added success")){
+            return true;
+        }else{
+            return false;
+        }
     }
 //    public boolean addPersonalTask(){
 //

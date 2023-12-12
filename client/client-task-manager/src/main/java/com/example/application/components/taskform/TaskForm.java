@@ -1,9 +1,18 @@
 package com.example.application.components.taskform;
 
 import com.example.application.services.CrmServiceRest;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -21,6 +30,8 @@ public class TaskForm extends VerticalLayout {
     private TextArea description;
     private DateTimePicker deadline;
     public Button addTaskButton;
+    public Notification errorNotification;
+    public Notification successNotification;
 
 
     public TaskForm(CrmServiceRest service){
@@ -28,8 +39,34 @@ public class TaskForm extends VerticalLayout {
         configureTaskNameArea();
         configureTaskDescArea();
         configureTaskDeadline();
+        configureErrorNotify();
+        configureSuccessNotify();
         addTaskButton = new Button("Add");
         add(taskName, description, deadline, addTaskButton);
+    }
+
+    public void configureSuccessNotify(){
+        successNotification = new Notification();
+        successNotification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+        Icon icon = VaadinIcon.CHECK_CIRCLE.create();
+
+        var layout = new HorizontalLayout(icon, new Text("Application submitted!"));
+        layout.setAlignItems(Alignment.CENTER);
+
+        successNotification.add(layout);
+    }
+
+    public void configureErrorNotify(){
+        errorNotification = new Notification();
+        errorNotification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+
+        Icon icon = VaadinIcon.WARNING.create();
+
+        var layout = new HorizontalLayout(icon, new Text("Failed to generate report!"));
+        layout.setAlignItems(Alignment.CENTER);
+
+        errorNotification.add(layout);
     }
 
     public void configureTaskDeadline(){

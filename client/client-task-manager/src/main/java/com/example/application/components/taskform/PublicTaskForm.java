@@ -3,12 +3,14 @@ package com.example.application.components.taskform;
 import com.example.application.data.PublicTask;
 import com.example.application.services.CrmServiceRest;
 import com.example.application.services.dto.PublicTaskDto;
+import com.vaadin.flow.component.notification.Notification;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class PublicTaskForm extends TaskForm{
     private PublicTaskDto publicTaskDto;
+
 
     public PublicTaskForm(CrmServiceRest service) {
         super(service);
@@ -19,7 +21,13 @@ public class PublicTaskForm extends TaskForm{
     public void configureAddTaskButton() {
         addTaskButton.addClickListener(buttonClickEvent -> {
             if (generateTask()){
-                getService().addPublicTask(publicTaskDto);
+                if (getService().addPublicTask(publicTaskDto)){
+                    successNotification.s;
+                }else{
+                    errorNotification.open();
+                }
+            }else{
+                errorNotification.open();
             }
         });
     }
