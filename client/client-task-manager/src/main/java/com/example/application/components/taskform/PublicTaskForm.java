@@ -22,7 +22,7 @@ public class PublicTaskForm extends TaskForm{
         addTaskButton.addClickListener(buttonClickEvent -> {
             if (generateTask()){
                 if (getService().addPublicTask(publicTaskDto)){
-                    successNotification.s;
+                    successNotification.open();
                 }else{
                     errorNotification.open();
                 }
