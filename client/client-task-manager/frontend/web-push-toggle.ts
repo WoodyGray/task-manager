@@ -3,10 +3,14 @@ import {customElement, property, state} from 'lit/decorators.js';
 import '@vaadin/button';
 import '@vaadin/checkbox';
 import {CheckboxCheckedChangedEvent} from "@vaadin/checkbox";
+import {Icon} from "@vaadin/icon";
+import '@vaadin/icon';
+
+
 
 @customElement('web-push-toggle')
 export class WebPushToggle extends LitElement {
-  @property({type: String}) caption = 'Subscribe to push notifications';
+  @property({type: String}) caption = "notify";
   @property({type: String}) publicKey = '';
   @state() denied = Notification.permission === 'denied';
   @state() subscribed = false;

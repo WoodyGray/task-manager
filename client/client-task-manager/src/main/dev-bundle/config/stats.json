@@ -270,7 +270,7 @@
   "Frontend/web-push-toggle.ts"
  ],
  "frontendHashes": {
-  "web-push-toggle.ts": "d9d9126c64a0591874a24cdf97d283ee82fe9f9a837ea810e2413fa6c14c9719",
+  "web-push-toggle.ts": "63a08685854cf81a1d6034251a01e37127b7f5d3b2d7457d118a627f0333b721",
   "buttonFunctions.js": "c852123f9b2c44eb75e555119d3e05a7dbe78b91d0ab616feb9df1654474707d",
   "comboBoxConnector.js": "1d004c3dae9c76f8bcc68678abe1b8f7bdc8b456f5c9c4c7f190df8ed25d66cd",
   "contextMenuConnector.js": "8960e00884b9a8b62e24be63e03fe7045dcb9b6844a8a238eb4619d5595e2cfc",
@@ -296,7 +296,7 @@
   "flowcrmtutorial": "{\n  \"lumoImports\" : [ \"typography\", \"color\", \"spacing\", \"badge\", \"utility\" ]\n}"
  },
  "entryScripts": [
-  "VAADIN/build/indexhtml-7a5f0d6d.js"
+  "VAADIN/build/indexhtml-1c1f083a.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -331,6 +331,6 @@
  },
  "packageJsonHash": "7e0debc659a9911e45f090e99c119f4782b98684cba5c975b4802c6d8ed4cbcf",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-7a5f0d6d.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-1c1f083a.js\"></script>"
  ]
 }

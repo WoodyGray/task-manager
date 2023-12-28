@@ -1,5 +1,6 @@
 package com.example.application.views.tasks;
 
+import com.example.application.components.AccountForm;
 import com.example.application.components.AddTaskDiv;
 import com.example.application.components.ThemeButton;
 import com.example.application.data.*;
@@ -129,7 +130,7 @@ public class TasksApp extends AppLayout {
 
     private Button configureAccountButton(){
         Button button = new Button("Account");
-        button.addClickListener(click -> setContent(new SignUpForm()));
+        button.addClickListener(click -> setContent(new AccountForm(service.getUser())));
         return button;
     }
 }
