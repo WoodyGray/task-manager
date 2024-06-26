@@ -2,7 +2,9 @@ package com.woody.task_manager.config;
 
 import com.woody.task_manager.util.JwtTokenUtils;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,29 +31,36 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        String username = null;
-        String jwt = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")){
-            jwt = authHeader.substring(7);
+            String jwt = authHeader.substring(7);
             try {
-                username = jwtTokenUtils.getUsername(jwt);
+                String username = jwtTokenUtils.getUsername(jwt);
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+                    setAuthentication(jwt, username);
+                }
             } catch (ExpiredJwtException e){
-                log.debug("token's lifetime is over");
+                log.warn("JWT token is expired: {}", e.getMessage());
             } catch (SignatureException e){
-                log.debug("incorrect signature");
+                log.warn("JWT signature validation failed: {}", e.getMessage());
+            } catch (MalformedJwtException | UnsupportedJwtException e){
+                log.warn("Invalid JWT token: {}", e.getMessage());
+            } catch (IllegalArgumentException e){
+                log.warn("JWT token compact of handler are invalid: {}", e.getMessage());
             }
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    jwtTokenUtils.getRoles(jwt).stream()
-                            .map(SimpleGrantedAuthority::new).collect(Collectors.toList())
-            );
-            SecurityContextHolder.getContext().setAuthentication(token);
-        }
         filterChain.doFilter(request, response);
+    }
+
+    private void setAuthentication(String jwt, String username){
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                username,
+                null,
+                jwtTokenUtils.getRoles(jwt).stream()
+                        .map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+        );
+        SecurityContextHolder.getContext().setAuthentication(token);
+        log.info("JWT token processed successfully for user:{}", username);
     }
 }
